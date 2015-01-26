@@ -24,6 +24,14 @@ public class ClusterEntry implements ByteBufferWritable, Comparable<ClusterEntry
     @Getter
     private ClusterData clusterData;
 
+    public ClusterEntry() {
+        id = 0;
+        secret = "";
+        name = "";
+
+        clusterStatus = null;
+    }
+
     public ClusterEntry(BactaConfiguration configuration) {
         id = configuration.getInt("Bacta/GameServer", "Id");
         secret = configuration.getString("Bacta/GameServer", "Secret");

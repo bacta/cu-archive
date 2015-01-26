@@ -13,5 +13,6 @@ appender("STDOUT", ConsoleAppender) {
 
 logger("org.reflections",  WARN)
 logger("io.netty",  WARN)
+logger("com.ocdsoft",  TRACE)
 
-root(TRACE, ["STDOUT"])
+root(INFO, ["STDOUT"])
