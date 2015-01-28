@@ -4,6 +4,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.conf.ini.IniBactaConfiguration;
+import com.ocdsoft.bacta.soe.io.udp.game.GameServer;
 import com.ocdsoft.bacta.soe.io.udp.login.LoginServer;
 
 /**
@@ -26,12 +27,12 @@ public final class CuServer {
             loginThread.start();
         }
 
-//        if(runGame) {
-//            Injector gameInjector = injector.createChildInjector(new CuGameModule());
-//            GameServer gameServer = gameInjector.getInstance(GameServer.class);
-//            Thread gameThread = new Thread(gameServer);
-//            gameThread.setName("GameThread");
-//            gameThread.start();
-//        }
+        if(runGame) {
+            Injector gameInjector = Guice.createInjector(new CuGameModule());
+            GameServer gameServer = gameInjector.getInstance(GameServer.class);
+            Thread gameThread = new Thread(gameServer);
+            gameThread.setName("GameThread");
+            gameThread.start();
+        }
     }
 }

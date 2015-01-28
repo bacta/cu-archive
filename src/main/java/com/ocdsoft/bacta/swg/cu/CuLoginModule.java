@@ -12,18 +12,14 @@ import com.ocdsoft.bacta.engine.security.password.PasswordHash;
 import com.ocdsoft.bacta.engine.security.password.Pbkdf2SaltedPasswordHash;
 import com.ocdsoft.bacta.engine.serialization.NetworkSerializer;
 import com.ocdsoft.bacta.soe.ServerState;
-import com.ocdsoft.bacta.soe.data.LoginObjectSerializer;
 import com.ocdsoft.bacta.soe.data.couchbase.CouchbaseAccountService;
 import com.ocdsoft.bacta.soe.data.couchbase.CouchbaseConnectionDatabaseConnector;
 import com.ocdsoft.bacta.soe.io.udp.login.LoginServerState;
 import com.ocdsoft.bacta.soe.io.udp.login.LoginTransceiverFactory;
 import com.ocdsoft.bacta.soe.object.account.SoeAccount;
-import com.ocdsoft.bacta.soe.router.SoeMessageRouter;
-import com.ocdsoft.bacta.soe.router.SoeMessageRouterImpl;
-import com.ocdsoft.bacta.soe.router.SwgMessageRouter;
 import com.ocdsoft.bacta.soe.service.SessionKeyService;
 import com.ocdsoft.bacta.soe.service.impl.SWGSessionKeyService;
-import com.ocdsoft.bacta.swg.router.SwgProductionMessageRouter;
+import com.ocdsoft.bacta.swg.cu.data.LoginObjectSerializer;
 
 
 public class CuLoginModule extends AbstractModule implements Module {
@@ -40,10 +36,7 @@ public class CuLoginModule extends AbstractModule implements Module {
         bind(new TypeLiteral<AccountService<SoeAccount>>(){}).to(new TypeLiteral<CouchbaseAccountService<SoeAccount>>(){});
         bind(PasswordHash.class).to(Pbkdf2SaltedPasswordHash.class);
 
-        bind(SoeMessageRouter.class).to(SoeMessageRouterImpl.class);
-
         bind(ServerState.class).to(LoginServerState.class);
-        bind(SwgMessageRouter.class).to(SwgProductionMessageRouter.class);
     }
 
 }
