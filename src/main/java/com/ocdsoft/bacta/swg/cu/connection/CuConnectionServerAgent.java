@@ -1,10 +1,11 @@
 package com.ocdsoft.bacta.swg.cu.connection;
 
 import com.google.inject.Inject;
+import com.ocdsoft.bacta.engine.network.client.ConnectionState;
 import com.ocdsoft.bacta.soe.client.ClientConnection;
 import com.ocdsoft.bacta.soe.connection.ConnectionServerAgent;
 import com.ocdsoft.bacta.soe.io.udp.game.GameServerState;
-import com.ocdsoft.bacta.soe.message.ConnectMessage;
+import com.ocdsoft.bacta.soe.service.SessionKeyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,16 +23,25 @@ public class CuConnectionServerAgent implements ConnectionServerAgent {
     private final GameServerState serverState;
     private final ClientConnection clientConnection;
 
+    private final SessionKeyService sessionKeyService;
+
+    private final Thread agentThread;
+
     @Inject
-    public CuConnectionServerAgent(final GameServerState serverState, final ClientConnection clientConnection) {
+    public CuConnectionServerAgent(final SessionKeyService sessionKeyService, final GameServerState serverState, final ClientConnection clientConnection) {
+        this.sessionKeyService = sessionKeyService;
         this.serverState = serverState;
         this.clientConnection = clientConnection;
 
+        agentThread = new Thread(clientConnection);
+        this.clientConnection.setConnectCallback(this::onConnect);
         this.clientConnection.setConnectCallback(this::onConnect);
     }
 
     @Override
     public void run() {
+
+        agentThread.start();
 
         try {
             while (true) {
@@ -48,11 +58,17 @@ public class CuConnectionServerAgent implements ConnectionServerAgent {
 
     @Override
     public void update() {
-        ConnectMessage connectMessage = new ConnectMessage(2, 2, 2);
-        clientConnection.sendMessage(connectMessage);
+
+        if(clientConnection.getState() != ConnectionState.ONLINE) {
+            clientConnection.connect(sessionKeyService.getNextKey());
+        } else {
+            onConnect(null);
+        }
     }
 
     private Void onConnect(Void aVoid) {
+
+
 
         return null;
     }

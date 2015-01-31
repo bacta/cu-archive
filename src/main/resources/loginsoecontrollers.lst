@@ -2,7 +2,7 @@ com.ocdsoft.bacta.soe.controller.AckAllController
 com.ocdsoft.bacta.soe.controller.AckController
 com.ocdsoft.bacta.soe.controller.ClockSyncController
 com.ocdsoft.bacta.soe.controller.ConnectController
-com.ocdsoft.bacta.soe.controller.DisconnectController
+com.ocdsoft.bacta.soe.controller.TerminateController
 com.ocdsoft.bacta.soe.controller.GroupMessageController
 com.ocdsoft.bacta.soe.controller.KeepAliveController
 com.ocdsoft.bacta.soe.controller.MultiController
