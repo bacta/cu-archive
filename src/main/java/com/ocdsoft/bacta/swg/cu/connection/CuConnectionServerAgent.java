@@ -1,15 +1,19 @@
 package com.ocdsoft.bacta.swg.cu.connection;
 
 import com.google.inject.Inject;
+import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.network.client.ConnectionState;
 import com.ocdsoft.bacta.soe.client.ClientConnection;
 import com.ocdsoft.bacta.soe.connection.ConnectionServerAgent;
 import com.ocdsoft.bacta.soe.io.udp.game.GameServerState;
 import com.ocdsoft.bacta.soe.service.SessionKeyService;
+import com.ocdsoft.bacta.swg.cu.message.game.server.GameServerStatus;
+import com.ocdsoft.bacta.swg.cu.object.login.ClusterEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Singleton;
+import java.net.InetSocketAddress;
 
 /**
  * Created by kburkhardt on 1/26/15.
@@ -20,7 +24,7 @@ public class CuConnectionServerAgent implements ConnectionServerAgent {
 
     private static final Logger logger = LoggerFactory.getLogger(CuConnectionServerAgent.class);
 
-    private final GameServerState serverState;
+    private final GameServerState<ClusterEntry> serverState;
     private final ClientConnection clientConnection;
 
     private final SessionKeyService sessionKeyService;
@@ -28,13 +32,20 @@ public class CuConnectionServerAgent implements ConnectionServerAgent {
     private final Thread agentThread;
 
     @Inject
-    public CuConnectionServerAgent(final SessionKeyService sessionKeyService, final GameServerState serverState, final ClientConnection clientConnection) {
+    public CuConnectionServerAgent(final SessionKeyService sessionKeyService,
+                                   final GameServerState<ClusterEntry> serverState,
+                                   final ClientConnection clientConnection,
+                                   final BactaConfiguration configuration) {
         this.sessionKeyService = sessionKeyService;
         this.serverState = serverState;
         this.clientConnection = clientConnection;
 
         agentThread = new Thread(clientConnection);
-        this.clientConnection.setConnectCallback(this::onConnect);
+
+        String address = configuration.getStringWithDefault("Bacta/LoginServer", "BindIp", "127.0.0.1");
+        int port = configuration.getIntWithDefault("Bacta/LoginServer", "Port", 44463);
+
+        this.clientConnection.setRemoteAddress(new InetSocketAddress(address, port));
         this.clientConnection.setConnectCallback(this::onConnect);
     }
 
@@ -59,16 +70,16 @@ public class CuConnectionServerAgent implements ConnectionServerAgent {
     @Override
     public void update() {
 
-        if(clientConnection.getState() != ConnectionState.ONLINE) {
-            clientConnection.connect(sessionKeyService.getNextKey());
-        } else {
-            onConnect(null);
-        }
+        clientConnection.connect(sessionKeyService.getNextKey());
+
     }
 
     private Void onConnect(Void aVoid) {
 
+        GameServerStatus gameServerStatus = new GameServerStatus(serverState);
+        clientConnection.sendMessage(gameServerStatus);
 
+        clientConnection.setState(ConnectionState.DISCONNECTED);
 
         return null;
     }

@@ -23,6 +23,7 @@ import com.ocdsoft.bacta.soe.service.SessionKeyService;
 import com.ocdsoft.bacta.soe.service.impl.SWGSessionKeyService;
 import com.ocdsoft.bacta.swg.cu.connection.CuConnectionServerAgent;
 import com.ocdsoft.bacta.swg.cu.data.GameObjectSerializer;
+import com.ocdsoft.bacta.swg.cu.object.login.ClusterEntry;
 
 
 public class CuGameModule extends AbstractModule implements Module {
@@ -39,10 +40,11 @@ public class CuGameModule extends AbstractModule implements Module {
         bind(NetworkSerializer.class).to(GameObjectSerializer.class);
         bind(new TypeLiteral<AccountService<SoeAccount>>(){}).to(new TypeLiteral<CouchbaseAccountService<SoeAccount>>(){});
         bind(PasswordHash.class).to(Pbkdf2SaltedPasswordHash.class);
-        bind(ConnectionServerAgent.class).to(CuConnectionServerAgent.class);
-
         bind(ServerState.class).to(CuGameServerState.class);
         bind(GameServerState.class).to(CuGameServerState.class);
+        bind(new TypeLiteral<GameServerState<ClusterEntry>>(){}).to(CuGameServerState.class);
+        bind(ConnectionServerAgent.class).to(CuConnectionServerAgent.class);
+
     }
 
 }

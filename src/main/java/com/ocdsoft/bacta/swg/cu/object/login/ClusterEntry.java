@@ -1,16 +1,21 @@
 package com.ocdsoft.bacta.swg.cu.object.login;
 
+import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
+import com.ocdsoft.bacta.engine.utils.BufferUtil;
+import com.ocdsoft.bacta.soe.object.ClusterEntryItem;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.nio.ByteBuffer;
 import java.util.Map;
 
-public class ClusterEntry implements ByteBufferWritable, Comparable<ClusterEntry> {
+public class ClusterEntry implements ClusterEntryItem, ByteBufferWritable, Comparable<ClusterEntry> {
 
     @Getter
-    private final int id;
+    @Setter
+    private int id;
 
     @Getter
     private final String secret;
@@ -24,6 +29,10 @@ public class ClusterEntry implements ByteBufferWritable, Comparable<ClusterEntry
     @Getter
     private ClusterData clusterData;
 
+    /**
+     * This constructor is used in Cluster Service to load constructors from
+     */
+    @Inject
     public ClusterEntry() {
         id = 0;
         secret = "";
@@ -32,8 +41,9 @@ public class ClusterEntry implements ByteBufferWritable, Comparable<ClusterEntry
         clusterStatus = null;
     }
 
+
     public ClusterEntry(BactaConfiguration configuration) {
-        id = configuration.getInt("Bacta/GameServer", "Id");
+        id = -1;
         secret = configuration.getString("Bacta/GameServer", "Secret");
         name = configuration.getString("Bacta/GameServer", "Name");
 
@@ -41,13 +51,31 @@ public class ClusterEntry implements ByteBufferWritable, Comparable<ClusterEntry
         clusterData = new ClusterData(id, name);
     }
 
+    public ClusterEntry(ByteBuffer buffer) {
+
+        id = buffer.getInt();
+        secret = BufferUtil.getAscii(buffer);
+        name = BufferUtil.getAscii(buffer);
+
+        clusterStatus = new ClusterStatus(buffer);
+        clusterData = new ClusterData(buffer);
+    }
+
+    /**
+     * This constructor is called when the cluster object is
+     * deserialized from the database
+     * @param clusterInfo Map of values
+     */
     public ClusterEntry(Map<String, Object> clusterInfo) {
 
         id = ((Double)clusterInfo.get("id")).intValue();
         secret = (String) clusterInfo.get("secret");
         name = (String) clusterInfo.get("name");
 
-        clusterStatus = new ClusterStatus(clusterInfo);
+        Map<String, Object> status = (Map<String, Object>) clusterInfo.get("clusterStatus");
+        status.put("id", id);
+
+        clusterStatus = new ClusterStatus(status);
         clusterData = new ClusterData(id, name);
     }
 
@@ -58,6 +86,39 @@ public class ClusterEntry implements ByteBufferWritable, Comparable<ClusterEntry
 
     @Override
     public void writeToBuffer(ByteBuffer buffer) {
+        buffer.putInt(id);
+        BufferUtil.putAscii(buffer, secret);
+        BufferUtil.putAscii(buffer, name);
 
+        clusterStatus.writeToBuffer(buffer);
+        clusterData.writeToBuffer(buffer);
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ClusterEntry that = (ClusterEntry) o;
+
+        return secret.equals(that.secret);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (secret != null ? secret.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (clusterStatus != null ? clusterStatus.hashCode() : 0);
+        result = 31 * result + (clusterData != null ? clusterData.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "ClusterEntry{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

@@ -6,6 +6,7 @@ import com.ocdsoft.bacta.engine.security.authenticator.AccountService;
 import com.ocdsoft.bacta.soe.ServerType;
 import com.ocdsoft.bacta.soe.SwgController;
 import com.ocdsoft.bacta.soe.SwgMessageController;
+import com.ocdsoft.bacta.soe.annotation.RolesAllowed;
 import com.ocdsoft.bacta.soe.io.udp.login.LoginConnection;
 import com.ocdsoft.bacta.soe.object.account.SoeAccount;
 import com.ocdsoft.bacta.soe.service.ClusterService;
@@ -21,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @SwgController(server = ServerType.LOGIN, handles = LoginClientId.class)
+@RolesAllowed({})
 public class LoginClientIdController implements SwgMessageController<LoginConnection, LoginClientId> {
 
     private final Logger logger = LoggerFactory.getLogger(getClass().getSimpleName());

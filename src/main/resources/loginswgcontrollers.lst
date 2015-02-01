@@ -1,1 +1,2 @@
 com.ocdsoft.bacta.swg.cu.controller.login.LoginClientIdController
+com.ocdsoft.bacta.swg.cu.controller.login.GameServerStatusController

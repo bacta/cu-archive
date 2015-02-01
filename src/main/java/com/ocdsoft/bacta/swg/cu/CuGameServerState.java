@@ -15,13 +15,11 @@ import com.ocdsoft.bacta.swg.cu.object.login.ClusterEntry;
 public final class CuGameServerState implements GameServerState<ClusterEntry>, Comparable<CuGameServerState> {
 
     private final ServerType serverType;
-    private ServerStatus serverStatus;
     private final ClusterEntry entry;
 
     @Inject
     public CuGameServerState(BactaConfiguration configuration) {
         serverType = ServerType.GAME;
-        serverStatus = ServerStatus.DOWN;
 
         entry = new ClusterEntry(configuration);
     }
@@ -38,12 +36,12 @@ public final class CuGameServerState implements GameServerState<ClusterEntry>, C
 
     @Override
     public ServerStatus getServerStatus() {
-        return serverStatus;
+        return entry.getClusterStatus().getStatus();
     }
 
     @Override
     public void setServerStatus(ServerStatus status) {
-        this.serverStatus = status;
+        entry.getClusterStatus().setStatus(status);
     }
 
     @Override

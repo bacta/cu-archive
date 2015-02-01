@@ -7,19 +7,16 @@ import com.ocdsoft.bacta.swg.cu.object.login.ClusterEntry;
 import lombok.Getter;
 
 import java.nio.ByteBuffer;
-import java.security.NoSuchAlgorithmException;
 
 public class GameServerStatus extends GameNetworkMessage {
 
     private static final short priority = 0x4;
     private static final int messageType = SOECRC32.hashCode(GameServerStatus.class.getSimpleName());
 
-//    private MessageDigest md = MessageDigest.getInstance("MD5");
-
     @Getter
     private final ClusterEntry clusterEntry;
 
-    public GameServerStatus(GameServerState<ClusterEntry> gameServerState) throws NoSuchAlgorithmException {
+    public GameServerStatus(GameServerState<ClusterEntry> gameServerState) {
         super(priority, messageType);
 
         this.clusterEntry = gameServerState.getClusterEntry();
@@ -28,21 +25,11 @@ public class GameServerStatus extends GameNetworkMessage {
     public GameServerStatus(ByteBuffer buffer) {
         super(priority, messageType);
 
-        this.clusterEntry = null;
+        this.clusterEntry = new ClusterEntry(buffer);
     }
 
     @Override
     public void writeToBuffer(ByteBuffer buffer) {
-//        writeAscii(new String(md.digest(serverState.getSecret().getBytes())));
-//        writeAscii(serverState.getName());
-//        writeAscii(serverState.getAddress());
-//        writeInt(serverState.getPort());
-//        writeInt(serverState.getPingPort());
-//        writeInt(serverState.getPopulation());
-//        writeInt(serverState.getMaximumPopulation());
-//        writeInt(serverState.getMaximumCharacters());
-//        writeInt(serverState.getTimezone());
-//        writeInt(serverState.getConnectionState().getValue());
-//        writeBoolean(serverState.isRecommended());
+        clusterEntry.writeToBuffer(buffer);
     }
 }
