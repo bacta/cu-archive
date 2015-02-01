@@ -7,7 +7,7 @@ import com.ocdsoft.bacta.soe.ServerType;
 import com.ocdsoft.bacta.soe.SwgController;
 import com.ocdsoft.bacta.soe.SwgMessageController;
 import com.ocdsoft.bacta.soe.annotation.RolesAllowed;
-import com.ocdsoft.bacta.soe.io.udp.login.LoginConnection;
+import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.object.account.SoeAccount;
 import com.ocdsoft.bacta.soe.service.ClusterService;
 import com.ocdsoft.bacta.swg.cu.message.ErrorMessage;
@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 
 @SwgController(server = ServerType.LOGIN, handles = LoginClientId.class)
 @RolesAllowed({})
-public class LoginClientIdController implements SwgMessageController<LoginConnection, LoginClientId> {
+public class LoginClientIdController implements SwgMessageController<LoginClientId> {
 
     private final Logger logger = LoggerFactory.getLogger(getClass().getSimpleName());
 
@@ -46,7 +46,7 @@ public class LoginClientIdController implements SwgMessageController<LoginConnec
     }
 
     @Override
-    public void handleIncoming(LoginConnection connection, LoginClientId message) {
+    public void handleIncoming(SoeUdpConnection connection, LoginClientId message) {
 
         // Validate client version
         if (!isRequiredVersion(message.getClientVersion())) {

@@ -6,7 +6,7 @@ import com.ocdsoft.bacta.soe.SwgController;
 import com.ocdsoft.bacta.soe.SwgMessageController;
 import com.ocdsoft.bacta.soe.annotation.RolesAllowed;
 import com.ocdsoft.bacta.soe.connection.ConnectionRole;
-import com.ocdsoft.bacta.soe.io.udp.login.LoginConnection;
+import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.service.ClusterService;
 import com.ocdsoft.bacta.swg.cu.message.game.server.GameServerStatus;
 import com.ocdsoft.bacta.swg.cu.object.login.ClusterEntry;
@@ -16,7 +16,7 @@ import com.ocdsoft.bacta.swg.cu.object.login.ClusterEntry;
  */
 @SwgController(server = ServerType.LOGIN, handles = GameServerStatus.class)
 @RolesAllowed({ConnectionRole.WHITELISTED})
-public class GameServerStatusController implements SwgMessageController<LoginConnection, GameServerStatus> {
+public class GameServerStatusController implements SwgMessageController<GameServerStatus> {
 
     private final ClusterService<ClusterEntry>  clusterService;
 
@@ -26,7 +26,7 @@ public class GameServerStatusController implements SwgMessageController<LoginCon
     }
 
     @Override
-    public void handleIncoming(LoginConnection loginConnection, GameServerStatus message) throws Exception {
+    public void handleIncoming(SoeUdpConnection loginConnection, GameServerStatus message) throws Exception {
         clusterService.updateClusterInfo(message.getClusterEntry());
     }
 }

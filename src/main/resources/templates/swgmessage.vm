@@ -1,0 +1,14 @@
+package $packageName;
+
+import com.ocdsoft.bacta.swg.network.swg.message.SwgMessage;
+
+public class $messageName extends SwgMessage {
+
+    public $messageName() {
+        super($priority, $opcode);
+        
+    }
+    /**
+     $messageStruct
+     */
+}

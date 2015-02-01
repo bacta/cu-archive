@@ -18,6 +18,8 @@ public final class CuServer {
 
         boolean runLogin = configuration.getBoolean("Bacta/LoginServer", "Enabled");
         boolean runGame = configuration.getBoolean("Bacta/GameServer", "Enabled");
+        System.setProperty("template.classpath", CuServer.class.getPackage().getName());
+        //System.setProperty("template.writepath", CuServer.class.getClassLoader().);
 
         if(runLogin) {
             Injector loginInjector = Guice.createInjector(new CuLoginModule());
@@ -25,6 +27,11 @@ public final class CuServer {
             Thread loginThread = new Thread(loginServer);
             loginThread.setName("LoginThread");
             loginThread.start();
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
         if(runGame) {
