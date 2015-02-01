@@ -1,12 +1,29 @@
 package $packageName;
 
-import com.ocdsoft.bacta.swg.network.swg.message.SwgMessage;
+import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
+import com.ocdsoft.bacta.soe.util.SOECRC32;
 
-public class $messageName extends SwgMessage {
+import java.nio.ByteBuffer;
+
+public class $messageName extends GameNetworkMessage {
+
+    private static final short priority = $priority;
+    private static final int messageType = SOECRC32.hashCode(${messageName}.class.getSimpleName());
+
 
     public $messageName() {
-        super($priority, $opcode);
+        super(priority, messageType);
         
+    }
+
+    public $messageName(ByteBuffer buffer) {
+        super(priority, messageType);
+    
+    }
+
+    @Override
+    public void writeToBuffer(ByteBuffer buffer) {
+    
     }
     /**
      $messageStruct

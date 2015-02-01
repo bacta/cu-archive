@@ -7,6 +7,8 @@ import com.ocdsoft.bacta.engine.conf.ini.IniBactaConfiguration;
 import com.ocdsoft.bacta.soe.io.udp.game.GameServer;
 import com.ocdsoft.bacta.soe.io.udp.login.LoginServer;
 
+import java.io.File;
+
 /**
  * Created by kburkhardt on 12/29/14.
  */
@@ -18,8 +20,12 @@ public final class CuServer {
 
         boolean runLogin = configuration.getBoolean("Bacta/LoginServer", "Enabled");
         boolean runGame = configuration.getBoolean("Bacta/GameServer", "Enabled");
+        
+        String baseFilePath = CuServer.class.getProtectionDomain().getCodeSource().getLocation().getFile();
+        File file = new File(baseFilePath);
+
         System.setProperty("template.classpath", CuServer.class.getPackage().getName());
-        //System.setProperty("template.writepath", CuServer.class.getClassLoader().);
+        System.setProperty("template.filepath", file.getParentFile().getParent());
 
         if(runLogin) {
             Injector loginInjector = Guice.createInjector(new CuLoginModule());

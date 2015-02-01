@@ -1,4 +1,4 @@
-package com.ocdsoft.bacta.swg.cu.controller.login;
+package com.ocdsoft.bacta.swg.cu.controller.login.server;
 
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.soe.ServerType;
