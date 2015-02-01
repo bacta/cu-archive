@@ -1,11 +1,13 @@
 package com.ocdsoft.bacta.swg.cu.connection;
 
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.network.client.ConnectionState;
 import com.ocdsoft.bacta.soe.client.ClientConnection;
 import com.ocdsoft.bacta.soe.connection.ConnectionServerAgent;
 import com.ocdsoft.bacta.soe.io.udp.game.GameServerState;
+import com.ocdsoft.bacta.soe.router.SoeMessageRouter;
 import com.ocdsoft.bacta.soe.service.SessionKeyService;
 import com.ocdsoft.bacta.swg.cu.message.game.server.GameServerStatus;
 import com.ocdsoft.bacta.swg.cu.object.login.ClusterEntry;
@@ -32,21 +34,31 @@ public class CuConnectionServerAgent implements ConnectionServerAgent {
     private final Thread agentThread;
 
     @Inject
-    public CuConnectionServerAgent(final SessionKeyService sessionKeyService,
+    public CuConnectionServerAgent(final Injector injector,
+                                   final SessionKeyService sessionKeyService,
                                    final GameServerState<ClusterEntry> serverState,
-                                   final ClientConnection clientConnection,
                                    final BactaConfiguration configuration) {
+        
         this.sessionKeyService = sessionKeyService;
         this.serverState = serverState;
-        this.clientConnection = clientConnection;
 
-        agentThread = new Thread(clientConnection);
+        final SoeMessageRouter soeMessageRouter = new SoeMessageRouter(
+                injector,
+                configuration.getStringWithDefault("Bacta/GameServer/Client", "SoeControllerList", "clientsoecontrollers.lst"),
+                configuration.getStringWithDefault("Bacta/GameServer/Client", "SwgControllerList", "clientswgcontrollers.lst")
+        );
 
+        int udpSize = configuration.getIntWithDefault("Bacta/Network", "UdpMaxSize", 496);
+        int protocolVersion = configuration.getIntWithDefault("Bacta/Network", "ProtocolVersion", 2);
         String address = configuration.getStringWithDefault("Bacta/LoginServer", "BindIp", "127.0.0.1");
         int port = configuration.getIntWithDefault("Bacta/LoginServer", "Port", 44463);
+        
+        this.clientConnection = new ClientConnection(soeMessageRouter, udpSize, protocolVersion);
 
         this.clientConnection.setRemoteAddress(new InetSocketAddress(address, port));
         this.clientConnection.setConnectCallback(this::onConnect);
+
+        agentThread = new Thread(clientConnection);
     }
 
     @Override
