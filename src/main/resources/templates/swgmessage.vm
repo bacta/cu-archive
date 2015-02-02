@@ -16,13 +16,13 @@ public class $messageName extends GameNetworkMessage {
         
     }
 
-    public $messageName(ByteBuffer buffer) {
+    public $messageName(final ByteBuffer buffer) {
         super(priority, messageType);
     
     }
 
     @Override
-    public void writeToBuffer(ByteBuffer buffer) {
+    public void writeToBuffer(final ByteBuffer buffer) {
     
     }
     /**

@@ -7,6 +7,7 @@ import com.ocdsoft.bacta.soe.ServerType;
 import com.ocdsoft.bacta.soe.SwgController;
 import com.ocdsoft.bacta.soe.SwgMessageController;
 import com.ocdsoft.bacta.soe.annotation.RolesAllowed;
+import com.ocdsoft.bacta.soe.connection.ConnectionRole;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.object.account.SoeAccount;
 import com.ocdsoft.bacta.swg.cu.message.ErrorMessage;
@@ -35,7 +36,7 @@ public class ClientIdMsgController implements SwgMessageController<ClientIdMsg> 
     public void handleIncoming(SoeUdpConnection connection, ClientIdMsg message) throws Exception {
 
         // Validate client version
-        if (message.getClientVersion().equals(requiredClientVersion)) {
+        if (!message.getClientVersion().equals(requiredClientVersion)) {
             ErrorMessage error = new ErrorMessage("Login Error", "The client you are attempting to connect with does not match that required by the server.", false);
             connection.sendMessage(error);
             logger.info("Sending Client Error");
@@ -52,6 +53,7 @@ public class ClientIdMsgController implements SwgMessageController<ClientIdMsg> 
 
         connection.setAccountId(account.getId());
         connection.setAccountUsername(account.getUsername());
+        connection.addRole(ConnectionRole.AUTHENTICATED);
 
         // TODO: Actually implement permissions
         ClientPermissionsMessage cpm = new ClientPermissionsMessage(true, true, true, true);

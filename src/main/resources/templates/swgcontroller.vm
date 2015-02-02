@@ -15,7 +15,7 @@ import ${messageClasspath}.${messageName};
 @RolesAllowed({ConnectionRole.AUTHENTICATED})
 public class $className implements SwgMessageController<$messageName> {
 
-    private static Logger logger = LoggerFactory.getLogger(${className}.class.getSimpleName());
+    private static final Logger logger = LoggerFactory.getLogger(${className}.class.getSimpleName());
 
     @Override
     public void handleIncoming(SoeUdpConnection connection, $messageName message) throws Exception {

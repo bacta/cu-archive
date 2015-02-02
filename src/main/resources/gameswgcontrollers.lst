@@ -1,2 +1,5 @@
 com.ocdsoft.bacta.swg.cu.controller.game.server.LagRequestController
 com.ocdsoft.bacta.swg.cu.controller.game.server.ClientIdMsgController
+com.ocdsoft.bacta.swg.cu.controller.game.server.LagReportController
+com.ocdsoft.bacta.swg.cu.controller.game.server.ClientRandomNameRequestController
+com.ocdsoft.bacta.swg.cu.controller.game.server.ClientCreateCharacterController
