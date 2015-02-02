@@ -8,9 +8,9 @@ import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.network.client.ServerStatus;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
+import com.ocdsoft.bacta.soe.util.SoeMessageUtil;
 import lombok.Getter;
 import lombok.Setter;
-import org.joda.time.DateTimeZone;
 
 import java.nio.ByteBuffer;
 import java.util.Map;
@@ -35,13 +35,11 @@ import java.util.Map;
  *
  */
 
-public class ClusterStatus implements ByteBufferWritable {
+public class ClusterStatus implements ByteBufferWritable, Comparable<ClusterStatus> {
 
     @Getter
-    private final int id;
-
-    @Getter
-    private final String name;
+    @Setter
+    private int id;
 
     @Getter
     private final String connectionServerAddress;
@@ -81,15 +79,14 @@ public class ClusterStatus implements ByteBufferWritable {
     private int onlineFreeTrialLimit;
 
     public ClusterStatus(BactaConfiguration configuration) {
-        id = configuration.getInt("Bacta/GameServer", "Id");
-        name = configuration.getString("Bacta/GameServer", "Name");
+        id = -1;
         connectionServerAddress = configuration.getString("Bacta/GameServer", "PublicAddress");
         connectionServerPort = (short) configuration.getInt("Bacta/GameServer", "Port");
         connectionServerPingPort = (short) configuration.getInt("Bacta/GameServer", "Ping");
         populationOnline = 0;
         populationOnlineStatus = PopulationStatus.PS_very_light;
         maxCharactersPerAccount = configuration.getInt("Bacta/GameServer", "MaxCharsPerAccount");
-        timeZone = DateTimeZone.getDefault().getOffset(null) / 1000;
+        timeZone = SoeMessageUtil.getTimeZoneValue();
         status = ServerStatus.DOWN;
         dontRecommend = configuration.getBoolean("Bacta/GameServer", "DontRecommended");
         onlinePlayerLimit = configuration.getInt("Bacta/GameServer", "OnlinePlayerLimit");
@@ -98,7 +95,6 @@ public class ClusterStatus implements ByteBufferWritable {
 
     public ClusterStatus(Map<String, Object> clusterInfo) {
         id = (int) clusterInfo.get("id");
-        name = (String) clusterInfo.get("name");
         connectionServerAddress = (String) clusterInfo.get("connectionServerAddress");
         connectionServerPort = ((Double)clusterInfo.get("connectionServerPort")).shortValue();
         connectionServerPingPort = ((Double)clusterInfo.get("connectionServerPingPort")).shortValue();
@@ -114,7 +110,6 @@ public class ClusterStatus implements ByteBufferWritable {
 
     public ClusterStatus(ByteBuffer buffer) {
         id = buffer.getInt();
-        name = BufferUtil.getAscii(buffer);
         connectionServerAddress = BufferUtil.getAscii(buffer);
         connectionServerPort = buffer.getShort();
         connectionServerPingPort = buffer.getShort();
@@ -131,7 +126,6 @@ public class ClusterStatus implements ByteBufferWritable {
     @Override
     public void writeToBuffer(ByteBuffer buffer) {
         buffer.putInt(id);
-        BufferUtil.putAscii(buffer, name);
         BufferUtil.putAscii(buffer, connectionServerAddress);
         buffer.putShort(connectionServerPort);
         buffer.putShort(connectionServerPingPort);
@@ -152,4 +146,9 @@ public class ClusterStatus implements ByteBufferWritable {
     public boolean isRestricted()  { return status == ServerStatus.RESTRICTED;  }
     public boolean isFull()  { return status == ServerStatus.FULL;  }
     public boolean isRecommended()  { return !dontRecommend;  }
+
+    @Override
+    public int compareTo(ClusterStatus o) {
+        return connectionServerAddress.compareTo(o.connectionServerAddress);
+    }
 }

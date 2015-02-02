@@ -5,8 +5,8 @@ import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
 import com.ocdsoft.bacta.soe.object.ClusterEntryItem;
+import com.ocdsoft.bacta.soe.util.SoeMessageUtil;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.nio.ByteBuffer;
 import java.util.Map;
@@ -14,7 +14,6 @@ import java.util.Map;
 public class ClusterEntry implements ClusterEntryItem, ByteBufferWritable, Comparable<ClusterEntry> {
 
     @Getter
-    @Setter
     private int id;
 
     @Getter
@@ -27,7 +26,7 @@ public class ClusterEntry implements ClusterEntryItem, ByteBufferWritable, Compa
     private final ClusterStatus clusterStatus;
 
     @Getter
-    private ClusterData clusterData;
+    private final ClusterData clusterData;
 
     /**
      * This constructor is used in Cluster Service to load constructors from
@@ -39,6 +38,14 @@ public class ClusterEntry implements ClusterEntryItem, ByteBufferWritable, Compa
         name = "";
 
         clusterStatus = null;
+        clusterData = null;
+    }
+    
+    @Override
+    public void setId(int id) {
+        this.id = id;
+        clusterStatus.setId(id);
+        clusterData.setId(id);
     }
 
 
@@ -119,6 +126,8 @@ public class ClusterEntry implements ClusterEntryItem, ByteBufferWritable, Compa
         return "ClusterEntry{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", status='" + clusterStatus.getStatus() + '\'' +
+                ", timezone='" + SoeMessageUtil.getTimeZoneOffsetFromValue(clusterStatus.getTimeZone()) + '\'' +
                 '}';
     }
 }

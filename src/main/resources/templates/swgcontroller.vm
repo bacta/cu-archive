@@ -18,7 +18,7 @@ public class $className implements SwgMessageController<$messageName> {
     private static Logger logger = LoggerFactory.getLogger(${className}.class.getSimpleName());
 
     @Override
-    public void handleIncoming(SoeUdpConnection loginConnection, $messageName message) throws Exception {
+    public void handleIncoming(SoeUdpConnection connection, $messageName message) throws Exception {
         logger.warn("This controller is not implemented");
     }
 }
