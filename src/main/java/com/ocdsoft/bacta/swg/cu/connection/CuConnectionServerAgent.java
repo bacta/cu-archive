@@ -86,15 +86,11 @@ public class CuConnectionServerAgent implements ConnectionServerAgent {
 
     }
 
-    private Void onConnect(Void aVoid) {
+    private void onConnect(ClientConnection connection) {
 
         GameServerStatus gameServerStatus = new GameServerStatus(serverState);
         clientConnection.sendMessage(gameServerStatus);
 
         clientConnection.setState(ConnectionState.DISCONNECTED);
-
-        return null;
     }
-
-
 }
