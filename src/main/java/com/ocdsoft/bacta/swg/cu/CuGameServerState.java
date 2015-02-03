@@ -41,6 +41,11 @@ public final class CuGameServerState implements GameServerState<ClusterEntry>, C
     }
 
     @Override
+    public int getId() {
+        return entry.getId();
+    }
+
+    @Override
     public ClusterEntry getClusterEntry() {
         return entry;
     }

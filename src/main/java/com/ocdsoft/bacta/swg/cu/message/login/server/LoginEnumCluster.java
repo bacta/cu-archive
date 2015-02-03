@@ -11,7 +11,7 @@ import java.util.TreeSet;
 
 public class LoginEnumCluster extends GameNetworkMessage {
 
-    private static final short priority = 0x3;
+    private static final short priority = 0x2;
     private static final int messageType = SOECRC32.hashCode(LoginEnumCluster.class.getSimpleName());
 
     private final Set<ClusterData> clusterDataSet;

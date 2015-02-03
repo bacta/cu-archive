@@ -1,2 +1,4 @@
 com.ocdsoft.bacta.swg.cu.controller.login.server.LoginClientIdController
 com.ocdsoft.bacta.swg.cu.controller.login.server.GameServerStatusController
+com.ocdsoft.bacta.swg.cu.controller.login.server.RequestExtendedClusterInfoController
+

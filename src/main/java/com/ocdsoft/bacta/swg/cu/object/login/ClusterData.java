@@ -2,6 +2,7 @@ package com.ocdsoft.bacta.swg.cu.object.login;
 
 import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
+import lombok.Setter;
 import org.joda.time.DateTimeZone;
 
 import java.nio.ByteBuffer;
@@ -16,9 +17,11 @@ import java.nio.ByteBuffer;
      int m_timeZone;
  };
  */
-public class ClusterData implements ByteBufferWritable {
+public class ClusterData implements ByteBufferWritable, Comparable<ClusterData> {
 
-    private final int id;
+    @Setter
+    private int id;
+    
     private final String name;
     private final int timezone;  // Offset from GMT in seconds
 
@@ -39,5 +42,10 @@ public class ClusterData implements ByteBufferWritable {
         buffer.putInt(id);
         BufferUtil.putAscii(buffer, name);
         buffer.putInt(timezone);
+    }
+
+    @Override
+    public int compareTo(ClusterData o) {
+        return name.compareTo(o.name);
     }
 }
