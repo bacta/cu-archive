@@ -13,14 +13,10 @@ import com.ocdsoft.bacta.swg.cu.object.login.ClusterEntry;
  */
 @Singleton
 public final class CuGameServerState implements GameServerState<ClusterEntry>, Comparable<CuGameServerState> {
-
-    private final ServerType serverType;
     private final ClusterEntry entry;
 
     @Inject
     public CuGameServerState(BactaConfiguration configuration) {
-        serverType = ServerType.GAME;
-
         entry = new ClusterEntry(configuration);
     }
 
@@ -31,7 +27,7 @@ public final class CuGameServerState implements GameServerState<ClusterEntry>, C
 
     @Override
     public ServerType getServerType() {
-        return serverType;
+        return ServerType.GAME;
     }
 
     @Override

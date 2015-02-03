@@ -55,14 +55,12 @@ public class CuSetupSharedFile implements SetupSharedFile {
                             treeFile.addSearchTree(rootPath + filePath, priority);
                     }
 
-                    if(feature ==0) {
-                        propertyName = String.format("searchTOC_%02d_%d", priority, priority);
-                        filePaths = configuration.getStringCollection("SharedFile", propertyName);
+                    propertyName = String.format("searchTOC_%02d_%d", feature, priority);
+                    filePaths = configuration.getStringCollection("SharedFile", propertyName);
 
-                        if (filePaths != null) {
-                            for (String filePath : filePaths)
-                                treeFile.addSearchTOC(rootPath + filePath, priority);
-                        }
+                    if (filePaths != null) {
+                        for (String filePath : filePaths)
+                            treeFile.addSearchTOC(rootPath + filePath, priority);
                     }
                 }
             }
