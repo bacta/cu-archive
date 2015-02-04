@@ -17,8 +17,8 @@ import com.ocdsoft.bacta.soe.object.account.SoeAccount;
 import com.ocdsoft.bacta.soe.util.SOECRC32;
 import com.ocdsoft.bacta.swg.cu.message.ErrorMessage;
 import com.ocdsoft.bacta.swg.cu.message.game.client.ClientCreateCharacter;
-import com.ocdsoft.bacta.swg.cu.message.game.server.create.ClientCreateCharacterFailed;
-import com.ocdsoft.bacta.swg.cu.message.game.server.create.ClientCreateCharacterSuccess;
+import com.ocdsoft.bacta.swg.cu.message.game.server.ClientCreateCharacterFailed;
+import com.ocdsoft.bacta.swg.cu.message.game.server.ClientCreateCharacterSuccess;
 import com.ocdsoft.bacta.swg.cu.object.game.SceneObject;
 import com.ocdsoft.bacta.swg.cu.object.game.intangible.player.PlayerObject;
 import com.ocdsoft.bacta.swg.cu.object.game.tangible.creature.CreatureObject;
@@ -32,6 +32,7 @@ import com.ocdsoft.bacta.swg.shared.object.template.SharedCreatureObjectTemplate
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.vecmath.Vector3f;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -213,12 +214,14 @@ public class ClientCreateCharacterController implements SwgMessageController<Cli
 //        character.setSlopeModPercent(objectTemplate.getSlopeModPercent());
 //        character.setWaterModPercent(objectTemplate.getWaterModPercent());
 
-//        //TODO: Change this to take the player to the tutorial zone when it is implemented.
-//        character.setPosition(
-//                startingLocationInfo.getX(),
-//                startingLocationInfo.getY(),
-//                startingLocationInfo.getZ()
-//        );
+        //TODO: Change this to take the player to the tutorial zone when it is implemented.
+        character.getTransform().setPosition(
+                new Vector3f(
+                startingLocationInfo.getX(),
+                startingLocationInfo.getY(),
+                startingLocationInfo.getZ()
+                )
+        );
 
         PlayerObject ghost = objectService.createObject(0, "object/player/shared_player.iff");
 //        ghost.setClient(client);

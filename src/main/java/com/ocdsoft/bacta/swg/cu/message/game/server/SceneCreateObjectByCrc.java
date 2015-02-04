@@ -1,4 +1,4 @@
-package com.ocdsoft.bacta.swg.cu.message.game.server.scene;
+package com.ocdsoft.bacta.swg.cu.message.game.server;
 
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;

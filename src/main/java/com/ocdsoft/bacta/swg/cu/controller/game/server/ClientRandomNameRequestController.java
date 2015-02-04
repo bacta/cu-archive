@@ -8,7 +8,7 @@ import com.ocdsoft.bacta.soe.annotation.RolesAllowed;
 import com.ocdsoft.bacta.soe.connection.ConnectionRole;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.swg.cu.message.game.client.ClientRandomNameRequest;
-import com.ocdsoft.bacta.swg.cu.message.game.server.create.ClientRandomNameResponse;
+import com.ocdsoft.bacta.swg.cu.message.game.server.ClientRandomNameResponse;
 import com.ocdsoft.bacta.swg.lang.Gender;
 import com.ocdsoft.bacta.swg.lang.Race;
 import com.ocdsoft.bacta.swg.name.NameService;

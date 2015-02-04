@@ -1,4 +1,4 @@
-package com.ocdsoft.bacta.swg.cu.message.game.server.zone;
+package com.ocdsoft.bacta.swg.cu.message.game.server;
 
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 import com.ocdsoft.bacta.soe.util.SOECRC32;

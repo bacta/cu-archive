@@ -1,6 +1,8 @@
 package com.ocdsoft.bacta.swg.cu.object.game;
 
 import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
+import com.ocdsoft.bacta.engine.utils.BufferUtil;
+import lombok.Getter;
 
 import javax.vecmath.Quat4f;
 import javax.vecmath.Vector3f;
@@ -17,7 +19,10 @@ const struct Transform
 
 public class Transform implements ByteBufferWritable {
 
+    @Getter
     private Vector3f position;
+    
+    @Getter
     private Quat4f rotation;
 
     public Transform() {
@@ -31,18 +36,8 @@ public class Transform implements ByteBufferWritable {
     }
 
     public Transform(ByteBuffer buffer) {
-        float rx = buffer.getFloat();
-        float ry = buffer.getFloat();
-        float rz = buffer.getFloat();
-        float rw = buffer.getFloat();
-
-        this.rotation = new Quat4f(rx, ry, rz, rw);
-        
-        float px = buffer.getFloat();
-        float pz = buffer.getFloat();
-        float py = buffer.getFloat();
-        this.position = new Vector3f(px, pz, py);
-        
+        this.rotation = BufferUtil.getQuat4f(buffer);
+        this.position = BufferUtil.getVector3f(buffer);
     }
     
     public void setPosition(Vector3f position) {
@@ -55,12 +50,7 @@ public class Transform implements ByteBufferWritable {
     
     @Override
     public void writeToBuffer(ByteBuffer buffer) {
-        buffer.putFloat(rotation.x); // X Direction
-        buffer.putFloat(rotation.y); // Y Direction
-        buffer.putFloat(rotation.z); // Z Direction
-        buffer.putFloat(rotation.w); // W Direction
-        buffer.putFloat(position.x); // X Position
-        buffer.putFloat(position.z); // Z Position
-        buffer.putFloat(position.y); // Y Position
+        BufferUtil.putQuat4f(buffer, rotation);
+        BufferUtil.putVector3f(buffer, position);
     }
 }

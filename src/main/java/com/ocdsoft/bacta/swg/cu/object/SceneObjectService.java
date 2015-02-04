@@ -7,6 +7,7 @@ import com.ocdsoft.bacta.engine.data.GameDatabaseConnector;
 import com.ocdsoft.bacta.engine.service.object.ObjectService;
 import com.ocdsoft.bacta.engine.service.objectfactory.NetworkObjectFactory;
 import com.ocdsoft.bacta.swg.cu.object.game.SceneObject;
+import com.ocdsoft.bacta.swg.data.ObjectTemplateService;
 import com.ocdsoft.bacta.swg.shared.object.template.ObjectTemplate;
 import gnu.trove.map.TLongObjectMap;
 import gnu.trove.map.hash.TLongObjectHashMap;
@@ -30,7 +31,7 @@ public class SceneObjectService implements ObjectService<SceneObject> {
     private final int deltaUpdateInterval;
 //    private final DeltaNetworkDispatcher deltaDispatcher;
     private final GameDatabaseConnector gameDatabaseConnector;
-//    private final ObjectTemplateService objectTemplateService;
+    private final ObjectTemplateService<SceneObject> objectTemplateService;
 
 //    @Inject
 //    private ContainerService containerService;
@@ -38,13 +39,13 @@ public class SceneObjectService implements ObjectService<SceneObject> {
     @Inject
     public SceneObjectService(BactaConfiguration configuration,
                               NetworkObjectFactory networkObjectFactory,
-                              GameDatabaseConnector gameDatabaseConnector) {
-//                              ObjectTemplateService objectTemplateService) {
+                              GameDatabaseConnector gameDatabaseConnector,
+                              ObjectTemplateService<SceneObject> objectTemplateService) {
 
         this.networkObjectFactory = networkObjectFactory;
         deltaUpdateInterval = configuration.getIntWithDefault("Bacta/GameServer", "DeltaUpdateInterval", 50);
         this.gameDatabaseConnector = gameDatabaseConnector;
-//        this.objectTemplateService = objectTemplateService;
+        this.objectTemplateService = objectTemplateService;
 //        deltaDispatcher = new DeltaNetworkDispatcher();
 //        new Thread(deltaDispatcher).start();
     }
@@ -52,19 +53,17 @@ public class SceneObjectService implements ObjectService<SceneObject> {
     @Override
     public <T extends SceneObject> T createObject(long creator, String templatePath) {
 
-//        ObjectTemplate template = objectTemplateService.getObjectTemplate(templatePath);
-//        Class<? extends SceneObject> objectClass = objectTemplateService.getClassForTemplate(template);
+        ObjectTemplate template = objectTemplateService.getObjectTemplate(templatePath);
+        Class<? extends SceneObject> objectClass = objectTemplateService.getClassForTemplate(template);
 
-        T newObject = (T) networkObjectFactory.createNetworkObject(SceneObject.class);
-
-//        T newObject = (T) networkObjectFactory.createNetworkObject(objectClass);
-//        newObject.setObjectTemplate(template);
+        T newObject = (T) networkObjectFactory.createNetworkObject(objectClass);
+        newObject.setObjectTemplate(template);
 //        newObject.setOnDirtyCallback(onDirtyCallback);
 
         loadTemplateData(creator, newObject);
 
         internalMap.put(newObject.getNetworkId(), newObject);
-        gameDatabaseConnector.createNetworkObject(newObject);
+        //gameDatabaseConnector.createNetworkObject(newObject);
 
         return newObject;
     }
@@ -98,7 +97,7 @@ public class SceneObjectService implements ObjectService<SceneObject> {
 
     @Override
     public <T extends SceneObject> void updateObject(T object) {
-        gameDatabaseConnector.updateNetworkObject(object);
+        //gameDatabaseConnector.updateNetworkObject(object);
     }
 
 

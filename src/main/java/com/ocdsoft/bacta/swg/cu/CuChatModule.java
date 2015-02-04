@@ -11,7 +11,6 @@ import com.ocdsoft.bacta.engine.security.password.PasswordHash;
 import com.ocdsoft.bacta.engine.security.password.Pbkdf2SaltedPasswordHash;
 import com.ocdsoft.bacta.engine.serialization.NetworkSerializer;
 import com.ocdsoft.bacta.soe.ServerState;
-import com.ocdsoft.bacta.soe.chat.ChatServerAgentService;
 import com.ocdsoft.bacta.soe.chat.ChatServerState;
 import com.ocdsoft.bacta.soe.data.couchbase.CouchbaseAccountService;
 import com.ocdsoft.bacta.soe.data.couchbase.CouchbaseConnectionDatabaseConnector;

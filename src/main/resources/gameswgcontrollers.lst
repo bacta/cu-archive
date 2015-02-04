@@ -3,3 +3,7 @@ com.ocdsoft.bacta.swg.cu.controller.game.server.ClientIdMsgController
 com.ocdsoft.bacta.swg.cu.controller.game.server.LagReportController
 com.ocdsoft.bacta.swg.cu.controller.game.server.ClientRandomNameRequestController
 com.ocdsoft.bacta.swg.cu.controller.game.server.ClientCreateCharacterController
+com.ocdsoft.bacta.swg.cu.controller.game.server.SelectCharacterController
+com.ocdsoft.bacta.swg.cu.controller.game.server.ClientInactivityMessageController
+com.ocdsoft.bacta.swg.cu.controller.game.server.ChatRequestRoomListController
+com.ocdsoft.bacta.swg.cu.controller.game.server.ConnectPlayerMessageController

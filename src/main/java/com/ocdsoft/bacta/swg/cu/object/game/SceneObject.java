@@ -7,10 +7,10 @@ import com.ocdsoft.bacta.engine.lang.Subject;
 import com.ocdsoft.bacta.engine.object.NetworkObject;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.swg.cu.event.ObservableGameEvent;
-import com.ocdsoft.bacta.swg.cu.message.game.server.scene.SceneCreateObjectByCrc;
-import com.ocdsoft.bacta.swg.cu.message.game.server.scene.SceneDestroyObject;
-import com.ocdsoft.bacta.swg.cu.message.game.server.scene.SceneEndBaselines;
-import com.ocdsoft.bacta.swg.cu.message.game.server.scene.UpdateContainmentMessage;
+import com.ocdsoft.bacta.swg.cu.message.game.server.SceneCreateObjectByCrc;
+import com.ocdsoft.bacta.swg.cu.message.game.server.SceneDestroyObject;
+import com.ocdsoft.bacta.swg.cu.message.game.server.SceneEndBaselines;
+import com.ocdsoft.bacta.swg.cu.message.game.server.UpdateContainmentMessage;
 import com.ocdsoft.bacta.swg.shared.container.Container;
 import com.ocdsoft.bacta.swg.shared.object.template.ObjectTemplate;
 import lombok.Getter;
@@ -106,6 +106,7 @@ public abstract class SceneObject extends NetworkObject implements Subject<Obser
     protected SceneObject() {
         listeners = Collections.synchronizedSet(new HashSet<>());
         connection = null;
+        transform = new Transform();
 
 //        balanceBank = new AutoDeltaInt(0, authoritativeClientServerPackage);
 //        balanceCash = new AutoDeltaInt(0, authoritativeClientServerPackage);
