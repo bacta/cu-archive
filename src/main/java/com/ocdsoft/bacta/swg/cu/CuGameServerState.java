@@ -13,6 +13,7 @@ import com.ocdsoft.bacta.swg.cu.object.login.ClusterEntry;
  */
 @Singleton
 public final class CuGameServerState implements GameServerState<ClusterEntry>, Comparable<CuGameServerState> {
+    
     private final ClusterEntry entry;
 
     @Inject
@@ -43,6 +44,11 @@ public final class CuGameServerState implements GameServerState<ClusterEntry>, C
     @Override
     public int getId() {
         return entry.getId();
+    }
+    
+    @Override 
+    public void setId(int id) {
+        entry.setId(id); 
     }
 
     @Override

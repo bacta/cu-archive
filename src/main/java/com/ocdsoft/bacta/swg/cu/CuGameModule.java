@@ -46,7 +46,8 @@ public class CuGameModule extends AbstractModule implements Module {
 	protected void configure() {
         bind(TreeFile.class).asEagerSingleton();
         bind(SetupSharedFile.class).to(CuSetupSharedFile.class).asEagerSingleton();
-        bind(new TypeLiteral<ObjectTemplateService<SceneObject>>() {}).to(CuObjectTemplateService.class);
+        bind(new TypeLiteral<ObjectTemplateService<SceneObject>>() {
+        }).to(CuObjectTemplateService.class);
         bind(new TypeLiteral<ObjectService<SceneObject>>(){}).to(SceneObjectService.class);
         bind(ObjectService.class).to(SceneObjectService.class);
         bind(BactaConfiguration.class).to(IniBactaConfiguration.class);

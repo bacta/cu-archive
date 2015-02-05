@@ -9,7 +9,7 @@ scan("10 seconds")
 
 appender("STDOUT", ConsoleAppender) {
     encoder(PatternLayoutEncoder) {
-        pattern = "%d{ISO8601} %logger{5} [%-5level] %msg%n"
+        pattern = "%d{ISO8601} %logger{4} [%-4level][%thread] %msg%n"
     }
 }
 

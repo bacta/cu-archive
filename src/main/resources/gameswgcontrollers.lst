@@ -7,3 +7,6 @@ com.ocdsoft.bacta.swg.cu.controller.game.server.SelectCharacterController
 com.ocdsoft.bacta.swg.cu.controller.game.server.ClientInactivityMessageController
 com.ocdsoft.bacta.swg.cu.controller.game.server.ChatRequestRoomListController
 com.ocdsoft.bacta.swg.cu.controller.game.server.ConnectPlayerMessageController
+com.ocdsoft.bacta.swg.cu.controller.game.server.RequestCategoriesMessageController
+com.ocdsoft.bacta.swg.cu.controller.game.server.NewTicketActivityMessageController
+com.ocdsoft.bacta.swg.cu.controller.game.server.GameServerStatusResponseController
