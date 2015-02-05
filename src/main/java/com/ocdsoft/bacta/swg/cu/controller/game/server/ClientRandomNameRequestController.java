@@ -1,7 +1,6 @@
 package com.ocdsoft.bacta.swg.cu.controller.game.server;
 
 import com.google.inject.Inject;
-import com.ocdsoft.bacta.soe.ServerType;
 import com.ocdsoft.bacta.soe.SwgController;
 import com.ocdsoft.bacta.soe.SwgMessageController;
 import com.ocdsoft.bacta.soe.annotation.RolesAllowed;
@@ -14,7 +13,7 @@ import com.ocdsoft.bacta.swg.lang.Race;
 import com.ocdsoft.bacta.swg.name.NameService;
 import com.ocdsoft.bacta.swg.shared.localization.StringId;
 
-@SwgController(server=ServerType.GAME, handles=ClientRandomNameRequest.class)
+@SwgController(ClientRandomNameRequest.class)
 @RolesAllowed({ConnectionRole.AUTHENTICATED})
 public class ClientRandomNameRequestController implements SwgMessageController<ClientRandomNameRequest> {
 

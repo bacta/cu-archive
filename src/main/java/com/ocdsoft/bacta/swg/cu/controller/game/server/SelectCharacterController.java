@@ -2,7 +2,6 @@ package com.ocdsoft.bacta.swg.cu.controller.game.server;
 
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.service.object.ObjectService;
-import com.ocdsoft.bacta.soe.ServerType;
 import com.ocdsoft.bacta.soe.SwgController;
 import com.ocdsoft.bacta.soe.SwgMessageController;
 import com.ocdsoft.bacta.soe.annotation.RolesAllowed;
@@ -18,7 +17,7 @@ import com.ocdsoft.bacta.swg.cu.object.game.tangible.creature.CreatureObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@SwgController(server=ServerType.GAME, handles=SelectCharacter.class)
+@SwgController(SelectCharacter.class)
 @RolesAllowed({ConnectionRole.AUTHENTICATED})
 public class SelectCharacterController implements SwgMessageController<SelectCharacter> {
 

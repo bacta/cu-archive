@@ -3,7 +3,6 @@ package com.ocdsoft.bacta.swg.cu.controller.game.server;
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.security.authenticator.AccountService;
-import com.ocdsoft.bacta.soe.ServerType;
 import com.ocdsoft.bacta.soe.SwgController;
 import com.ocdsoft.bacta.soe.SwgMessageController;
 import com.ocdsoft.bacta.soe.annotation.RolesAllowed;
@@ -16,7 +15,7 @@ import com.ocdsoft.bacta.swg.cu.message.game.server.ClientPermissionsMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@SwgController(server=ServerType.GAME, handles=ClientIdMsg.class)
+@SwgController(ClientIdMsg.class)
 @RolesAllowed({})
 public class ClientIdMsgController implements SwgMessageController<ClientIdMsg> {
 

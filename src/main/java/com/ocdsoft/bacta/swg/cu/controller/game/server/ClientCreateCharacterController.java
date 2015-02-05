@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.security.authenticator.AccountService;
 import com.ocdsoft.bacta.engine.service.object.ObjectService;
-import com.ocdsoft.bacta.soe.ServerType;
 import com.ocdsoft.bacta.soe.SwgController;
 import com.ocdsoft.bacta.soe.SwgMessageController;
 import com.ocdsoft.bacta.soe.annotation.RolesAllowed;
@@ -36,7 +35,7 @@ import javax.vecmath.Vector3f;
 import java.util.HashSet;
 import java.util.Set;
 
-@SwgController(server=ServerType.GAME, handles=ClientCreateCharacter.class)
+@SwgController(ClientCreateCharacter.class)
 @RolesAllowed({ConnectionRole.AUTHENTICATED})
 public class ClientCreateCharacterController implements SwgMessageController<ClientCreateCharacter> {
 

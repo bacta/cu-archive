@@ -3,7 +3,6 @@ package com.ocdsoft.bacta.swg.cu.controller.login.server;
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.security.authenticator.AccountService;
-import com.ocdsoft.bacta.soe.ServerType;
 import com.ocdsoft.bacta.soe.SwgController;
 import com.ocdsoft.bacta.soe.SwgMessageController;
 import com.ocdsoft.bacta.soe.annotation.RolesAllowed;
@@ -21,7 +20,7 @@ import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@SwgController(server = ServerType.LOGIN, handles = LoginClientId.class)
+@SwgController(LoginClientId.class)
 @RolesAllowed({})
 public class LoginClientIdController implements SwgMessageController<LoginClientId> {
 

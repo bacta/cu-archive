@@ -11,7 +11,7 @@ import com.ocdsoft.bacta.soe.connection.ConnectionRole;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import ${messageClasspath}.${messageName};
 
-@SwgController(server=$serverType, handles=$messageNameClass)
+@SwgController($messageNameClass)
 @RolesAllowed({ConnectionRole.AUTHENTICATED})
 public class $className implements SwgMessageController<$messageName> {
 

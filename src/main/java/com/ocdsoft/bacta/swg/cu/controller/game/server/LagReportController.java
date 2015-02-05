@@ -1,6 +1,5 @@
 package com.ocdsoft.bacta.swg.cu.controller.game.server;
 
-import com.ocdsoft.bacta.soe.ServerType;
 import com.ocdsoft.bacta.soe.SwgController;
 import com.ocdsoft.bacta.soe.SwgMessageController;
 import com.ocdsoft.bacta.soe.annotation.RolesAllowed;
@@ -9,7 +8,7 @@ import com.ocdsoft.bacta.swg.cu.message.game.client.LagReport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@SwgController(server=ServerType.GAME, handles=LagReport.class)
+@SwgController(LagReport.class)
 @RolesAllowed({})
 public class LagReportController implements SwgMessageController<LagReport> {
 

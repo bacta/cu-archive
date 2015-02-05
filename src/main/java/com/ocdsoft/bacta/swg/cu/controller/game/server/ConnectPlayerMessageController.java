@@ -1,6 +1,5 @@
 package com.ocdsoft.bacta.swg.cu.controller.game.server;
 
-import com.ocdsoft.bacta.soe.ServerType;
 import com.ocdsoft.bacta.soe.SwgController;
 import com.ocdsoft.bacta.soe.SwgMessageController;
 import com.ocdsoft.bacta.soe.annotation.RolesAllowed;
@@ -11,7 +10,7 @@ import com.ocdsoft.bacta.swg.cu.message.game.server.ConnectPlayerResponseMessage
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@SwgController(server=ServerType.GAME, handles=ConnectPlayerMessage.class)
+@SwgController(ConnectPlayerMessage.class)
 @RolesAllowed({ConnectionRole.AUTHENTICATED})
 public class ConnectPlayerMessageController implements SwgMessageController<ConnectPlayerMessage> {
 
