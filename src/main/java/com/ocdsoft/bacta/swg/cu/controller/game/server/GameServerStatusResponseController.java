@@ -2,9 +2,9 @@ package com.ocdsoft.bacta.swg.cu.controller.game.server;
 
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.network.client.ConnectionState;
+import com.ocdsoft.bacta.soe.GameNetworkMessageController;
+import com.ocdsoft.bacta.soe.GameNetworkMessageHandled;
 import com.ocdsoft.bacta.soe.RolesAllowed;
-import com.ocdsoft.bacta.soe.SwgController;
-import com.ocdsoft.bacta.soe.SwgMessageController;
 import com.ocdsoft.bacta.soe.connection.ConnectionRole;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.io.udp.game.GameServerState;
@@ -14,9 +14,9 @@ import com.ocdsoft.bacta.swg.cu.object.login.ClusterEntry;
 /**
  * Created by kburkhardt on 1/31/15.
  */
-@SwgController(GameServerStatusResponse.class)
+@GameNetworkMessageHandled(GameServerStatusResponse.class)
 @RolesAllowed({ConnectionRole.WHITELISTED})
-public class GameServerStatusResponseController implements SwgMessageController<GameServerStatusResponse> {
+public class GameServerStatusResponseController implements GameNetworkMessageController<GameServerStatusResponse> {
     
     private final GameServerState<ClusterEntry> serverState;
     

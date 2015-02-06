@@ -1,9 +1,9 @@
 package com.ocdsoft.bacta.swg.cu.controller.chat;
 
 import com.google.inject.Inject;
+import com.ocdsoft.bacta.soe.GameNetworkMessageController;
+import com.ocdsoft.bacta.soe.GameNetworkMessageHandled;
 import com.ocdsoft.bacta.soe.RolesAllowed;
-import com.ocdsoft.bacta.soe.SwgController;
-import com.ocdsoft.bacta.soe.SwgMessageController;
 import com.ocdsoft.bacta.soe.chat.ChatServer;
 import com.ocdsoft.bacta.soe.chat.message.ChatAgentIdentity;
 import com.ocdsoft.bacta.soe.connection.ConnectionRole;
@@ -14,9 +14,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by crush on 2/1/15.
  */
-@SwgController(ChatAgentIdentity.class)
+@GameNetworkMessageHandled(ChatAgentIdentity.class)
 @RolesAllowed({ConnectionRole.WHITELISTED})
-public class ChatAgentIdentityController implements SwgMessageController<ChatAgentIdentity> {
+public class ChatAgentIdentityController implements GameNetworkMessageController<ChatAgentIdentity> {
     private static final Logger logger = LoggerFactory.getLogger(ChatAgentIdentityController.class);
 
     private final ChatServer chatServer;

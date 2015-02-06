@@ -4,9 +4,9 @@ import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.security.authenticator.AccountService;
 import com.ocdsoft.bacta.engine.service.object.ObjectService;
+import com.ocdsoft.bacta.soe.GameNetworkMessageController;
+import com.ocdsoft.bacta.soe.GameNetworkMessageHandled;
 import com.ocdsoft.bacta.soe.RolesAllowed;
-import com.ocdsoft.bacta.soe.SwgController;
-import com.ocdsoft.bacta.soe.SwgMessageController;
 import com.ocdsoft.bacta.soe.chat.ChatAvatarId;
 import com.ocdsoft.bacta.soe.connection.ConnectionRole;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
@@ -36,9 +36,9 @@ import javax.vecmath.Vector3f;
 import java.util.HashSet;
 import java.util.Set;
 
-@SwgController(ClientCreateCharacter.class)
+@GameNetworkMessageHandled(ClientCreateCharacter.class)
 @RolesAllowed({ConnectionRole.AUTHENTICATED})
-public class ClientCreateCharacterController implements SwgMessageController<ClientCreateCharacter> {
+public class ClientCreateCharacterController implements GameNetworkMessageController<ClientCreateCharacter> {
 
     private static final Logger logger = LoggerFactory.getLogger(ClientCreateCharacterController.class);
 

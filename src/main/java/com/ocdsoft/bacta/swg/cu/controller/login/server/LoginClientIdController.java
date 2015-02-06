@@ -3,9 +3,9 @@ package com.ocdsoft.bacta.swg.cu.controller.login.server;
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.security.authenticator.AccountService;
+import com.ocdsoft.bacta.soe.GameNetworkMessageController;
+import com.ocdsoft.bacta.soe.GameNetworkMessageHandled;
 import com.ocdsoft.bacta.soe.RolesAllowed;
-import com.ocdsoft.bacta.soe.SwgController;
-import com.ocdsoft.bacta.soe.SwgMessageController;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.object.account.SoeAccount;
 import com.ocdsoft.bacta.soe.service.ClusterService;
@@ -20,9 +20,9 @@ import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@SwgController(LoginClientId.class)
+@GameNetworkMessageHandled(LoginClientId.class)
 @RolesAllowed({})
-public class LoginClientIdController implements SwgMessageController<LoginClientId> {
+public class LoginClientIdController implements GameNetworkMessageController<LoginClientId> {
 
     private final Logger logger = LoggerFactory.getLogger(getClass().getSimpleName());
 

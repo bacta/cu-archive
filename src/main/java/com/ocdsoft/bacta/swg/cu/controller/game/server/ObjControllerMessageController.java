@@ -3,10 +3,10 @@ package com.ocdsoft.bacta.swg.cu.controller.game.server;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.ocdsoft.bacta.engine.service.object.ObjectService;
+import com.ocdsoft.bacta.soe.GameNetworkMessageController;
+import com.ocdsoft.bacta.soe.GameNetworkMessageHandled;
 import com.ocdsoft.bacta.soe.RolesAllowed;
 import com.ocdsoft.bacta.soe.ServerType;
-import com.ocdsoft.bacta.soe.SwgController;
-import com.ocdsoft.bacta.soe.SwgMessageController;
 import com.ocdsoft.bacta.soe.connection.ConnectionRole;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.util.SoeMessageUtil;
@@ -34,9 +34,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-@SwgController(ObjControllerMessage.class)
+@GameNetworkMessageHandled(ObjControllerMessage.class)
 @RolesAllowed({ConnectionRole.AUTHENTICATED})
-public class ObjControllerMessageController implements SwgMessageController<ObjControllerMessage> {
+public class ObjControllerMessageController implements GameNetworkMessageController<ObjControllerMessage> {
 
     private static final Logger logger = LoggerFactory.getLogger(ObjControllerMessageController.class.getSimpleName());
 

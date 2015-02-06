@@ -1,9 +1,9 @@
 package com.ocdsoft.bacta.swg.cu.controller.game.server;
 
 import com.google.inject.Inject;
+import com.ocdsoft.bacta.soe.GameNetworkMessageController;
+import com.ocdsoft.bacta.soe.GameNetworkMessageHandled;
 import com.ocdsoft.bacta.soe.RolesAllowed;
-import com.ocdsoft.bacta.soe.SwgController;
-import com.ocdsoft.bacta.soe.SwgMessageController;
 import com.ocdsoft.bacta.soe.connection.ConnectionRole;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.swg.cu.message.game.client.ClientRandomNameRequest;
@@ -13,9 +13,9 @@ import com.ocdsoft.bacta.swg.lang.Race;
 import com.ocdsoft.bacta.swg.name.NameService;
 import com.ocdsoft.bacta.swg.shared.localization.StringId;
 
-@SwgController(ClientRandomNameRequest.class)
+@GameNetworkMessageHandled(ClientRandomNameRequest.class)
 @RolesAllowed({ConnectionRole.AUTHENTICATED})
-public class ClientRandomNameRequestController implements SwgMessageController<ClientRandomNameRequest> {
+public class ClientRandomNameRequestController implements GameNetworkMessageController<ClientRandomNameRequest> {
 
     //private static final Logger logger = LoggerFactory.getLogger(ClientRandomNameRequestController.class.getSimpleName());
 

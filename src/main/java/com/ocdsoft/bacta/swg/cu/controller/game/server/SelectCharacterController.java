@@ -2,9 +2,9 @@ package com.ocdsoft.bacta.swg.cu.controller.game.server;
 
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.service.object.ObjectService;
+import com.ocdsoft.bacta.soe.GameNetworkMessageController;
+import com.ocdsoft.bacta.soe.GameNetworkMessageHandled;
 import com.ocdsoft.bacta.soe.RolesAllowed;
-import com.ocdsoft.bacta.soe.SwgController;
-import com.ocdsoft.bacta.soe.SwgMessageController;
 import com.ocdsoft.bacta.soe.chat.message.ChatOnConnectAvatar;
 import com.ocdsoft.bacta.soe.connection.ConnectionRole;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
@@ -18,9 +18,9 @@ import com.ocdsoft.bacta.swg.cu.object.game.tangible.creature.CreatureObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@SwgController(SelectCharacter.class)
+@GameNetworkMessageHandled(SelectCharacter.class)
 @RolesAllowed({ConnectionRole.AUTHENTICATED})
-public class SelectCharacterController implements SwgMessageController<SelectCharacter> {
+public class SelectCharacterController implements GameNetworkMessageController<SelectCharacter> {
 
     private static final Logger logger = LoggerFactory.getLogger(SelectCharacterController.class.getSimpleName());
 

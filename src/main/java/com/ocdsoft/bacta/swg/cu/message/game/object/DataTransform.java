@@ -5,6 +5,17 @@ import com.ocdsoft.bacta.swg.object.ObjectController;
 
 import java.nio.ByteBuffer;
 
+/**
+ struct __cppobj __declspec(align(4)) MessageQueueDataTransform : MessageQueue::Data
+ {
+     const unsigned int m_syncStamp;
+     const int m_sequenceNumber;
+     Transform m_transform;
+     const float m_speed;
+     float m_lookAtYaw;
+     bool m_useLookAtYaw;
+ };
+ */
 @ObjControllerId(0x71)
 public class DataTransform implements ObjectController {
 
