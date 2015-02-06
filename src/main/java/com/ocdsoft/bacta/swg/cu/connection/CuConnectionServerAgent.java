@@ -5,8 +5,8 @@ import com.google.inject.Injector;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.soe.connection.ConnectionServerAgent;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
-import com.ocdsoft.bacta.soe.io.udp.SoeTransceiver;
 import com.ocdsoft.bacta.soe.io.udp.game.GameServerState;
+import com.ocdsoft.bacta.soe.service.OutgoingConnectionService;
 import com.ocdsoft.bacta.soe.service.SessionKeyService;
 import com.ocdsoft.bacta.swg.cu.message.game.server.GameServerStatus;
 import com.ocdsoft.bacta.swg.cu.object.login.ClusterEntry;
@@ -27,18 +27,21 @@ public class CuConnectionServerAgent implements ConnectionServerAgent {
     private static final Logger logger = LoggerFactory.getLogger(CuConnectionServerAgent.class);
 
     private final GameServerState<ClusterEntry> serverState;
-    private final SoeUdpConnection clientConnection;
     private final int udpSize;
     private final int protocolVersion;
 
     private final SessionKeyService sessionKeyService;
 
-    private SoeTransceiver transceiver;
+    private final OutgoingConnectionService outgoingConnectionService;
+    private final InetSocketAddress remoteAddress;
+    
+    private SoeUdpConnection connection;
 
     @Inject
     public CuConnectionServerAgent(final Injector injector,
                                    final SessionKeyService sessionKeyService,
                                    final GameServerState<ClusterEntry> serverState,
+                                   final OutgoingConnectionService outgoingConnectionService,
                                    final BactaConfiguration configuration) throws UnknownHostException {
         
         this.sessionKeyService = sessionKeyService;
@@ -49,22 +52,12 @@ public class CuConnectionServerAgent implements ConnectionServerAgent {
         String address = configuration.getStringWithDefault("Bacta/LoginServer", "BindIp", "127.0.0.1");
         int port = configuration.getIntWithDefault("Bacta/LoginServer", "Port", 44463);
         
-        this.clientConnection = new SoeUdpConnection();
-        this.clientConnection.setRemoteAddress(new InetSocketAddress(address, port));
-        this.clientConnection.setConnectCallback(this::onConnect);
-    }
-
-    @Override
-    public void setTransceiver(final SoeTransceiver transceiver) {
-        this.transceiver = transceiver;
+        this.outgoingConnectionService = outgoingConnectionService;
+        remoteAddress = new InetSocketAddress(address, port);
     }
 
     @Override
     public void run() {
-
-        if(transceiver == null) {
-            throw new RuntimeException("Unable to run connection agent when transceiver has not been set");
-        }
 
         try {
             while (true) {
@@ -81,14 +74,13 @@ public class CuConnectionServerAgent implements ConnectionServerAgent {
 
     @Override
     public void update() {
-        transceiver.createOutgoingConnection(clientConnection);
-        clientConnection.connect(protocolVersion, sessionKeyService.getNextKey(), udpSize);
+        connection = outgoingConnectionService.createOutgoingConnection(remoteAddress, this::onConnect);
+        connection.connect(protocolVersion, sessionKeyService.getNextKey(), udpSize);
     }
     
 
     private void onConnect(SoeUdpConnection connection) {
-
         GameServerStatus gameServerStatus = new GameServerStatus(serverState);
-        clientConnection.sendMessage(gameServerStatus);
+        connection.sendMessage(gameServerStatus);
     }
 }

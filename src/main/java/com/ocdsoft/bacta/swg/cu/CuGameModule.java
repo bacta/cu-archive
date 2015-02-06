@@ -21,8 +21,10 @@ import com.ocdsoft.bacta.soe.data.couchbase.CouchbaseAccountService;
 import com.ocdsoft.bacta.soe.data.couchbase.CouchbaseConnectionDatabaseConnector;
 import com.ocdsoft.bacta.soe.data.couchbase.CouchbaseGameDatabaseConnector;
 import com.ocdsoft.bacta.soe.data.couchbase.CouchbaseNetworkIdGenerator;
+import com.ocdsoft.bacta.soe.io.udp.game.GameServer;
 import com.ocdsoft.bacta.soe.io.udp.game.GameServerState;
 import com.ocdsoft.bacta.soe.object.account.SoeAccount;
+import com.ocdsoft.bacta.soe.service.OutgoingConnectionService;
 import com.ocdsoft.bacta.soe.service.SessionKeyService;
 import com.ocdsoft.bacta.soe.service.impl.SWGSessionKeyService;
 import com.ocdsoft.bacta.swg.cu.connection.CuConnectionServerAgent;
@@ -48,7 +50,9 @@ public class CuGameModule extends AbstractModule implements Module {
         bind(SetupSharedFile.class).to(CuSetupSharedFile.class).asEagerSingleton();
         bind(new TypeLiteral<ObjectTemplateService<SceneObject>>() {
         }).to(CuObjectTemplateService.class);
-        bind(new TypeLiteral<ObjectService<SceneObject>>(){}).to(SceneObjectService.class);
+        bind(OutgoingConnectionService.class).to(GameServer.CuOutgoingConnectionService.class);
+        bind(new TypeLiteral<ObjectService<SceneObject>>() {
+        }).to(SceneObjectService.class);
         bind(ObjectService.class).to(SceneObjectService.class);
         bind(BactaConfiguration.class).to(IniBactaConfiguration.class);
         bind(SharedFileService.class).asEagerSingleton();
