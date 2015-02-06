@@ -39,4 +39,6 @@ class CuTemplateWriterSpecDebug extends Specification {
         cleanup:
         templateWriter.deleteFiles((int) 0xd5899226)
     }
+    
+    
 }

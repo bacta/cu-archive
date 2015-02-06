@@ -24,14 +24,16 @@ import com.ocdsoft.bacta.soe.data.couchbase.CouchbaseNetworkIdGenerator;
 import com.ocdsoft.bacta.soe.io.udp.game.GameServer;
 import com.ocdsoft.bacta.soe.io.udp.game.GameServerState;
 import com.ocdsoft.bacta.soe.object.account.SoeAccount;
+import com.ocdsoft.bacta.soe.service.ContainerService;
 import com.ocdsoft.bacta.soe.service.OutgoingConnectionService;
+import com.ocdsoft.bacta.soe.service.SWGSessionKeyService;
 import com.ocdsoft.bacta.soe.service.SessionKeyService;
-import com.ocdsoft.bacta.soe.service.impl.SWGSessionKeyService;
 import com.ocdsoft.bacta.swg.cu.connection.CuConnectionServerAgent;
+import com.ocdsoft.bacta.swg.cu.container.CuContainerService;
 import com.ocdsoft.bacta.swg.cu.data.GameObjectSerializer;
 import com.ocdsoft.bacta.swg.cu.object.CuObjectTemplateService;
+import com.ocdsoft.bacta.swg.cu.object.CuSceneObjectService;
 import com.ocdsoft.bacta.swg.cu.object.CuSetupSharedFile;
-import com.ocdsoft.bacta.swg.cu.object.SceneObjectService;
 import com.ocdsoft.bacta.swg.cu.object.game.SceneObject;
 import com.ocdsoft.bacta.swg.cu.object.login.ClusterEntry;
 import com.ocdsoft.bacta.swg.data.ObjectTemplateService;
@@ -51,9 +53,10 @@ public class CuGameModule extends AbstractModule implements Module {
         bind(new TypeLiteral<ObjectTemplateService<SceneObject>>() {
         }).to(CuObjectTemplateService.class);
         bind(OutgoingConnectionService.class).to(GameServer.CuOutgoingConnectionService.class);
+        bind(new TypeLiteral<ContainerService<SceneObject>>() {}).to(CuContainerService.class);
         bind(new TypeLiteral<ObjectService<SceneObject>>() {
-        }).to(SceneObjectService.class);
-        bind(ObjectService.class).to(SceneObjectService.class);
+        }).to(CuSceneObjectService.class);
+        bind(ObjectService.class).to(CuSceneObjectService.class);
         bind(BactaConfiguration.class).to(IniBactaConfiguration.class);
         bind(SharedFileService.class).asEagerSingleton();
         bind(SessionKeyService.class).to(SWGSessionKeyService.class);

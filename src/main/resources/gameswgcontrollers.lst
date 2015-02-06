@@ -10,3 +10,7 @@ com.ocdsoft.bacta.swg.cu.controller.game.server.ConnectPlayerMessageController
 com.ocdsoft.bacta.swg.cu.controller.game.server.RequestCategoriesMessageController
 com.ocdsoft.bacta.swg.cu.controller.game.server.NewTicketActivityMessageController
 com.ocdsoft.bacta.swg.cu.controller.game.server.GameServerStatusResponseController
+com.ocdsoft.bacta.swg.cu.controller.game.server.ObjControllerMessageController
+com.ocdsoft.bacta.swg.cu.controller.game.server.CmdSceneReadyController
+com.ocdsoft.bacta.swg.cu.controller.game.server.CommoditiesItemTypeListRequestController
+com.ocdsoft.bacta.swg.cu.controller.game.server.NewbieTutorialResponseController

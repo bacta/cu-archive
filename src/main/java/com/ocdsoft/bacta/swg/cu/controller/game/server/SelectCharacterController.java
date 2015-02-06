@@ -2,9 +2,10 @@ package com.ocdsoft.bacta.swg.cu.controller.game.server;
 
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.service.object.ObjectService;
+import com.ocdsoft.bacta.soe.RolesAllowed;
 import com.ocdsoft.bacta.soe.SwgController;
 import com.ocdsoft.bacta.soe.SwgMessageController;
-import com.ocdsoft.bacta.soe.annotation.RolesAllowed;
+import com.ocdsoft.bacta.soe.chat.message.ChatOnConnectAvatar;
 import com.ocdsoft.bacta.soe.connection.ConnectionRole;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.io.udp.game.GameServerState;
@@ -77,7 +78,8 @@ public class SelectCharacterController implements SwgMessageController<SelectCha
             ParametersMessage parammessage = new ParametersMessage(weatherUpdateInterval);
             connection.sendMessage(parammessage);
 
-//            connection.sendMessage(new ChatOnConnectAvatar());
+            boolean chatConnected = true;
+            connection.sendMessage(new ChatOnConnectAvatar());
 
 //			GuildObject guildObject = new GuildObject(); //TODO one global GuildObject list for server.
 //			guildObject.setClientCRC(0x7D40E2E6);
@@ -85,7 +87,7 @@ public class SelectCharacterController implements SwgMessageController<SelectCha
 //
 //			guildObject.sendTo(character);
 
-//            character.sendTo(client);
+            character.sendTo(connection);
 //            zone.add(character);
 
         } else {

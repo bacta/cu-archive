@@ -6,6 +6,7 @@ import com.ocdsoft.bacta.engine.lang.Observer;
 import com.ocdsoft.bacta.engine.lang.Subject;
 import com.ocdsoft.bacta.engine.object.NetworkObject;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
+import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 import com.ocdsoft.bacta.swg.cu.event.ObservableGameEvent;
 import com.ocdsoft.bacta.swg.cu.message.game.server.SceneCreateObjectByCrc;
 import com.ocdsoft.bacta.swg.cu.message.game.server.SceneDestroyObject;
@@ -46,7 +47,7 @@ public abstract class SceneObject extends NetworkObject implements Subject<Obser
     @Setter
     private boolean hyperspace;
 
-    protected transient Container container;
+    protected transient Container<SceneObject> container;
 
     @Getter
     @Setter
@@ -121,7 +122,7 @@ public abstract class SceneObject extends NetworkObject implements Subject<Obser
         eventRegistry = new ObservableEventRegistry();
     }
 
-    protected final void sendTo(SoeUdpConnection theirConnection) {
+    public final void sendTo(SoeUdpConnection theirConnection) {
         logger.trace("Sending baselines to {}.", getNetworkId());
 
         if (theirConnection == null) return;
@@ -134,14 +135,15 @@ public abstract class SceneObject extends NetworkObject implements Subject<Obser
 
 //        sendBaselinesTo(theirConnection);
 
-//        if (container != null) {
-//            for (SceneObject containedObject : container) {
-//                //TODO: Remove this if block when refactored to have contents list on Container.
-//                //At that point, there should never be a null object in the list...
-//                if (containedObject != null)
-//                    containedObject.sendTo(theirConnection);
-//            }
-//        }
+        if (container != null) {
+            for (SceneObject containedObject : container) {
+                //TODO: Remove this if block when refactored to have contents list on Container.
+                //At that point, there should never be a null object in the list...
+                if (containedObject != null) {
+                    containedObject.sendTo(theirConnection);
+                }
+            }
+        }
 
         SceneEndBaselines close = new SceneEndBaselines(this);
         theirConnection.sendMessage(close);
@@ -254,9 +256,9 @@ public abstract class SceneObject extends NetworkObject implements Subject<Obser
 //        uiPackage.addOnDirtyCallback(onDirtyCallback);
 //    }
 
-//    public final void broadcastMessage(SwgMessage message) {
+    public final void broadcastMessage(GameNetworkMessage message) {
 //        broadcastMessage(message, true);
-//    }
+    }
 //
 //    public final void broadcastMessage(SwgMessage message, boolean sendSelf) {
 //

@@ -6,6 +6,7 @@ import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.data.GameDatabaseConnector;
 import com.ocdsoft.bacta.engine.service.object.ObjectService;
 import com.ocdsoft.bacta.engine.service.objectfactory.NetworkObjectFactory;
+import com.ocdsoft.bacta.soe.service.ContainerService;
 import com.ocdsoft.bacta.swg.cu.object.game.SceneObject;
 import com.ocdsoft.bacta.swg.data.ObjectTemplateService;
 import com.ocdsoft.bacta.swg.shared.object.template.ObjectTemplate;
@@ -17,10 +18,11 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by Kyle on 3/24/14.
  */
+//TODO: Probably everything
 @Singleton
-public class SceneObjectService implements ObjectService<SceneObject> {
+public class CuSceneObjectService implements ObjectService<SceneObject> {
 
-    private final static Logger logger = LoggerFactory.getLogger(SceneObjectService.class);
+    private final static Logger logger = LoggerFactory.getLogger(CuSceneObjectService.class);
 
     private TLongObjectMap<SceneObject> internalMap = new TLongObjectHashMap<>();
 
@@ -33,19 +35,20 @@ public class SceneObjectService implements ObjectService<SceneObject> {
     private final GameDatabaseConnector gameDatabaseConnector;
     private final ObjectTemplateService<SceneObject> objectTemplateService;
 
-//    @Inject
-//    private ContainerService containerService;
+    private final ContainerService<SceneObject> containerService;
 
     @Inject
-    public SceneObjectService(BactaConfiguration configuration,
-                              NetworkObjectFactory networkObjectFactory,
-                              GameDatabaseConnector gameDatabaseConnector,
-                              ObjectTemplateService<SceneObject> objectTemplateService) {
+    public CuSceneObjectService(final BactaConfiguration configuration,
+                                final NetworkObjectFactory networkObjectFactory,
+                                final GameDatabaseConnector gameDatabaseConnector,
+                                final ObjectTemplateService<SceneObject> objectTemplateService,
+                                final ContainerService<SceneObject> containerService) {
 
         this.networkObjectFactory = networkObjectFactory;
         deltaUpdateInterval = configuration.getIntWithDefault("Bacta/GameServer", "DeltaUpdateInterval", 50);
         this.gameDatabaseConnector = gameDatabaseConnector;
         this.objectTemplateService = objectTemplateService;
+        this.containerService = containerService;
 //        deltaDispatcher = new DeltaNetworkDispatcher();
 //        new Thread(deltaDispatcher).start();
     }
@@ -70,7 +73,7 @@ public class SceneObjectService implements ObjectService<SceneObject> {
 
     private <T extends SceneObject> void loadTemplateData(long creator, T newObject) {
         ObjectTemplate template = newObject.getObjectTemplate();
-//        containerService.createObjectContainer(newObject);
+        containerService.createObjectContainer(newObject);
     }
 
     @Override
@@ -80,8 +83,8 @@ public class SceneObjectService implements ObjectService<SceneObject> {
         if(object == null) {
             object = gameDatabaseConnector.getNetworkObject(key);
             if(object != null) {
-                //ObjectTemplate template = objectTemplateService.getObjectTemplate(object.getTemplatePath());
-                //object.setTemplate(template); //TODO: Fix this!!!!!!
+//                ObjectTemplate template = objectTemplateService.getObjectTemplate(object.getTemplatePath());
+//                object.setObjectTemplate(template); //TODO: Fix this!!!!!!
                 internalMap.put(key, object);
             }
         }

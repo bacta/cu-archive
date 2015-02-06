@@ -4,9 +4,9 @@ import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.security.authenticator.AccountService;
 import com.ocdsoft.bacta.engine.service.object.ObjectService;
+import com.ocdsoft.bacta.soe.RolesAllowed;
 import com.ocdsoft.bacta.soe.SwgController;
 import com.ocdsoft.bacta.soe.SwgMessageController;
-import com.ocdsoft.bacta.soe.annotation.RolesAllowed;
 import com.ocdsoft.bacta.soe.chat.ChatAvatarId;
 import com.ocdsoft.bacta.soe.connection.ConnectionRole;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
@@ -14,6 +14,7 @@ import com.ocdsoft.bacta.soe.io.udp.game.GameServerState;
 import com.ocdsoft.bacta.soe.object.account.CharacterInfo;
 import com.ocdsoft.bacta.soe.object.account.SoeAccount;
 import com.ocdsoft.bacta.soe.util.SOECRC32;
+import com.ocdsoft.bacta.swg.cu.container.CuContainerService;
 import com.ocdsoft.bacta.swg.cu.message.ErrorMessage;
 import com.ocdsoft.bacta.swg.cu.message.game.client.ClientCreateCharacter;
 import com.ocdsoft.bacta.swg.cu.message.game.server.ClientCreateCharacterFailed;
@@ -54,7 +55,7 @@ public class ClientCreateCharacterController implements SwgMessageController<Cli
     private final NameService nameService;
     private final AllowBald allowBald;
     private final StartingLocations startingLocations;
-//    private final ContainerService containerService;
+    private final CuContainerService containerService;
 
     private final int minutesBetweenCreation;
     private final String defaultProfession;
@@ -63,20 +64,20 @@ public class ClientCreateCharacterController implements SwgMessageController<Cli
 
     @Inject
     public ClientCreateCharacterController(
-            ObjectTemplateService<SceneObject> templateService,
-            ObjectService<SceneObject> objectService,
-//            ZoneMap zoneMap,
-            AccountService<SoeAccount> accountService,
-            GameServerState serverState,
-            LoadoutEquipment loadoutEquipment,
-            ProfessionMods professionMods,
-            ProfessionDefaults professionDefaults,
-            HairStyles hairStyles,
-            AllowBald allowBald,
-            StartingLocations startingLocations,
-//            ContainerService containerService,
-            BactaConfiguration bactaConfiguration,
-            NameService nameService) {
+            final ObjectTemplateService<SceneObject> templateService,
+            final ObjectService<SceneObject> objectService,
+//            final ZoneMap zoneMap,
+            final AccountService<SoeAccount> accountService,
+            final GameServerState serverState,
+            final LoadoutEquipment loadoutEquipment,
+            final ProfessionMods professionMods,
+            final ProfessionDefaults professionDefaults,
+            final HairStyles hairStyles,
+            final AllowBald allowBald,
+            final StartingLocations startingLocations,
+            final CuContainerService containerService,
+            final BactaConfiguration bactaConfiguration,
+            final NameService nameService) {
 
         //this.sharedFileService = sharedFileService;
 //        this.zoneMap = zoneMap;
@@ -92,7 +93,7 @@ public class ClientCreateCharacterController implements SwgMessageController<Cli
         this.allowBald = allowBald;
         this.nameService = nameService;
         this.startingLocations = startingLocations;
-//        this.containerService = containerService;
+        this.containerService = containerService;
 
         this.minutesBetweenCreation = bactaConfiguration.getIntWithDefault(
                 "Bacta/GameServer/CharacterCreation",
@@ -226,7 +227,7 @@ public class ClientCreateCharacterController implements SwgMessageController<Cli
 //        ghost.setClient(client);
 //        ghost.setBiography(biography);
 //        ghost.setInitialized();
-//        containerService.transferItemToContainer(character, ghost);
+        containerService.transferItemToContainer(character, ghost);
 
 //        TangibleObject bank = objectService.createObject(0, "object/tangible/bank/shared_character_bank.iff");
 //        bank.setInitialized();

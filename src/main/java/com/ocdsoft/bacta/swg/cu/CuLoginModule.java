@@ -15,8 +15,8 @@ import com.ocdsoft.bacta.soe.data.couchbase.CouchbaseAccountService;
 import com.ocdsoft.bacta.soe.data.couchbase.CouchbaseConnectionDatabaseConnector;
 import com.ocdsoft.bacta.soe.io.udp.login.LoginServerState;
 import com.ocdsoft.bacta.soe.object.account.SoeAccount;
+import com.ocdsoft.bacta.soe.service.SWGSessionKeyService;
 import com.ocdsoft.bacta.soe.service.SessionKeyService;
-import com.ocdsoft.bacta.soe.service.impl.SWGSessionKeyService;
 import com.ocdsoft.bacta.swg.cu.data.LoginObjectSerializer;
 
 

@@ -2,9 +2,9 @@ package com.ocdsoft.bacta.swg.cu.controller.game.server;
 
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.network.client.ConnectionState;
+import com.ocdsoft.bacta.soe.RolesAllowed;
 import com.ocdsoft.bacta.soe.SwgController;
 import com.ocdsoft.bacta.soe.SwgMessageController;
-import com.ocdsoft.bacta.soe.annotation.RolesAllowed;
 import com.ocdsoft.bacta.soe.connection.ConnectionRole;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.io.udp.game.GameServerState;
