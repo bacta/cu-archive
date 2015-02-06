@@ -9,7 +9,6 @@ import com.ocdsoft.bacta.soe.SwgController;
 import com.ocdsoft.bacta.soe.SwgMessageController;
 import com.ocdsoft.bacta.soe.connection.ConnectionRole;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
-import com.ocdsoft.bacta.soe.util.ObjMessageTemplateWriter;
 import com.ocdsoft.bacta.soe.util.SoeMessageUtil;
 import com.ocdsoft.bacta.swg.cu.message.game.client.ObjControllerMessage;
 import com.ocdsoft.bacta.swg.cu.object.game.SceneObject;
@@ -19,6 +18,7 @@ import com.ocdsoft.bacta.swg.object.ObjControllerHandled;
 import com.ocdsoft.bacta.swg.object.ObjControllerId;
 import com.ocdsoft.bacta.swg.object.ObjectController;
 import com.ocdsoft.bacta.swg.shared.util.ObjectControllerNames;
+import com.ocdsoft.bacta.swg.util.ObjMessageTemplateWriter;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import lombok.Getter;
@@ -66,11 +66,11 @@ public class ObjControllerMessageController implements SwgMessageController<ObjC
         TangibleObject invoker = objectService.get(objControllerMessage.getNetworkId());
         
         ControllerData controllerData = controllers.get(objControllerMessage.getMessage());
-        ObjController controller = controllerData.getObjController();
-        Constructor<? extends ObjectController> constructor = controllerData.getConstructor();
-
-        if (controller != null) {
-
+        if(controllerData != null) {
+            
+            ObjController controller = controllerData.getObjController();
+            Constructor<? extends ObjectController> constructor = controllerData.getConstructor();
+            
             ObjectController message = constructor.newInstance(objControllerMessage.getBuffer());
             
             logger.trace("Routing to " + controller.getClass().getSimpleName());
