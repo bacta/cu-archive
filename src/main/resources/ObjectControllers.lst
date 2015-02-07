@@ -1,2 +1,3 @@
 com.ocdsoft.bacta.swg.cu.controller.game.object.DataTransformObjController
 com.ocdsoft.bacta.swg.cu.controller.game.object.CommandQueueEnqueueObjController
+com.ocdsoft.bacta.swg.cu.controller.game.object.TargetUpdateObjController
