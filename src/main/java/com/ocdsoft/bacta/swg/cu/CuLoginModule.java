@@ -13,8 +13,10 @@ import com.ocdsoft.bacta.engine.serialization.NetworkSerializer;
 import com.ocdsoft.bacta.soe.ServerState;
 import com.ocdsoft.bacta.soe.data.couchbase.CouchbaseAccountService;
 import com.ocdsoft.bacta.soe.data.couchbase.CouchbaseConnectionDatabaseConnector;
+import com.ocdsoft.bacta.soe.io.udp.login.LoginServer;
 import com.ocdsoft.bacta.soe.io.udp.login.LoginServerState;
 import com.ocdsoft.bacta.soe.object.account.SoeAccount;
+import com.ocdsoft.bacta.soe.service.OutgoingConnectionService;
 import com.ocdsoft.bacta.soe.service.SWGSessionKeyService;
 import com.ocdsoft.bacta.soe.service.SessionKeyService;
 import com.ocdsoft.bacta.swg.cu.data.LoginObjectSerializer;
@@ -27,6 +29,7 @@ public class CuLoginModule extends AbstractModule implements Module {
 
         bind(BactaConfiguration.class).to(IniBactaConfiguration.class);
         bind(SessionKeyService.class).to(SWGSessionKeyService.class);
+        bind(OutgoingConnectionService.class).to(LoginServer.LoginOutgoingConnectionService.class);
         bind(ConnectionDatabaseConnector.class).to(CouchbaseConnectionDatabaseConnector.class);
         bind(NetworkSerializer.class).to(LoginObjectSerializer.class);
         bind(new TypeLiteral<AccountService<SoeAccount>>(){}).to(new TypeLiteral<CouchbaseAccountService<SoeAccount>>(){});
