@@ -52,7 +52,7 @@ public class CuGameModule extends AbstractModule implements Module {
         bind(SetupSharedFile.class).to(CuSetupSharedFile.class).asEagerSingleton();
         bind(new TypeLiteral<ObjectTemplateService<SceneObject>>() {
         }).to(CuObjectTemplateService.class);
-        bind(OutgoingConnectionService.class).to(GameServer.CuOutgoingConnectionService.class);
+        bind(OutgoingConnectionService.class).to(GameServer.GameOutgoingConnectionService.class);
         bind(new TypeLiteral<ContainerService<SceneObject>>() {}).to(CuContainerService.class);
         bind(new TypeLiteral<ObjectService<SceneObject>>() {
         }).to(CuSceneObjectService.class);

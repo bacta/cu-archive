@@ -41,13 +41,13 @@ public class CommandTable implements SharedFileLoader {
     private void load() {
         logger.trace("Loading commands.");
 
-        //loadTables("datatables/command/command_tables_shared.iff", commandTable);
+        loadTables("datatables/command/command_tables_shared.iff", commandTable);
         logger.debug(String.format("Loaded %d commands.", commandTable.size()));
 
-        //loadTables("datatables/command/command_tables_shared_ground.iff", groundCommandTable);
+        loadTables("datatables/command/command_tables_shared_ground.iff", groundCommandTable);
         logger.debug(String.format("Loaded %d ground commands.", groundCommandTable.size()));
 
-        //loadTables("datatables/command/command_tables_shared_space.iff", spaceCommandTable);
+        loadTables("datatables/command/command_tables_shared_space.iff", spaceCommandTable);
         logger.debug(String.format("Loaded %d space commands.", spaceCommandTable.size()));
     }
 
@@ -58,13 +58,17 @@ public class CommandTable implements SharedFileLoader {
      */
     private void loadTables(final String tableFile, final Map<String, CommandData> table) {
 
-        final IffReader<DataTable> dataTableReader = new DataTableIffReader();
-        final DataTable dataTable = dataTableReader.read(new ChunkReader(tableFile, treeFile.open(tableFile)));
-        
-        // Get referenced table names
-        for (DataTableRow row : dataTable.getRows()) {
-            String tableName = row.get(0).getString();
-            loadTable(tableName, table);
+        try {
+            final IffReader<DataTable> dataTableReader = new DataTableIffReader();
+            final DataTable dataTable = dataTableReader.read(new ChunkReader(tableFile, treeFile.open(tableFile)));
+
+            // Get referenced table names
+            for (DataTableRow row : dataTable.getRows()) {
+                String tableName = row.get(0).getString();
+                loadTable(tableName, table);
+            }
+        } catch(Exception e) {
+            logger.error("Unable to load commands file list from {}", tableFile);
         }
     }
 
@@ -75,13 +79,17 @@ public class CommandTable implements SharedFileLoader {
      */
     private void loadTable(final String commandTable, final Map<String, CommandData> table) {
         
-        final IffReader<DataTable> dataTableReader = new DataTableIffReader();
-        final DataTable dataTable = dataTableReader.read(new ChunkReader(commandTable, treeFile.open(commandTable)));
+        try {
+            final IffReader<DataTable> dataTableReader = new DataTableIffReader();
+            final DataTable dataTable = dataTableReader.read(new ChunkReader(commandTable, treeFile.open(commandTable)));
 
-        // Get Shared Table names
-        for (DataTableRow row : dataTable.getRows()) {
-            CommandData newData = new CommandData(row);
-            table.put(newData.getCommandName(), newData);
+            // Get Shared Table names
+            for (DataTableRow row : dataTable.getRows()) {
+                CommandData newData = new CommandData(row);
+                table.put(newData.getCommandName(), newData);
+            }
+        } catch(Exception e) {
+            logger.error("Unable to load commands table from {}", commandTable);
         }
     }
     
