@@ -2,7 +2,7 @@ package com.ocdsoft.bacta.swg.cu.controller.game.object;
 
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.swg.cu.message.game.object.CommandQueueEnqueue;
-import com.ocdsoft.bacta.swg.cu.object.game.tangible.TangibleObject;
+import com.ocdsoft.bacta.swg.cu.object.tangible.TangibleObject;
 import com.ocdsoft.bacta.swg.object.ObjController;
 import com.ocdsoft.bacta.swg.object.ObjControllerHandled;
 import org.slf4j.Logger;

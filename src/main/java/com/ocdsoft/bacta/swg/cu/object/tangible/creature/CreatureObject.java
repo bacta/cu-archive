@@ -1,6 +1,6 @@
-package com.ocdsoft.bacta.swg.cu.object.game.tangible.creature;
+package com.ocdsoft.bacta.swg.cu.object.tangible.creature;
 
-import com.ocdsoft.bacta.swg.cu.object.game.tangible.TangibleObject;
+import com.ocdsoft.bacta.swg.cu.object.tangible.TangibleObject;
 
 public final class CreatureObject extends TangibleObject {
     @Override

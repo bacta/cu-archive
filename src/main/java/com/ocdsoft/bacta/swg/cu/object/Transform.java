@@ -1,4 +1,4 @@
-package com.ocdsoft.bacta.swg.cu.object.game;
+package com.ocdsoft.bacta.swg.cu.object;
 
 import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;

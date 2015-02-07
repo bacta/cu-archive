@@ -1,4 +1,4 @@
-package com.ocdsoft.bacta.swg.cu.object;
+package com.ocdsoft.bacta.swg.cu.data;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -15,7 +15,7 @@ import java.util.Collection;
  */
 @Singleton
 public class CuSetupSharedFile implements SetupSharedFile {
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private final static Logger logger = LoggerFactory.getLogger(CuSetupSharedFile.class);
 
     private final BactaConfiguration configuration;
     private final TreeFile treeFile;

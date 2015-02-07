@@ -2,11 +2,10 @@ package com.ocdsoft.bacta.swg.cu.object;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.ocdsoft.bacta.swg.cu.object.game.SceneObject;
-import com.ocdsoft.bacta.swg.cu.object.game.intangible.IntangibleObject;
-import com.ocdsoft.bacta.swg.cu.object.game.intangible.player.PlayerObject;
-import com.ocdsoft.bacta.swg.cu.object.game.tangible.TangibleObject;
-import com.ocdsoft.bacta.swg.cu.object.game.tangible.creature.CreatureObject;
+import com.ocdsoft.bacta.swg.cu.object.intangible.IntangibleObject;
+import com.ocdsoft.bacta.swg.cu.object.intangible.player.PlayerObject;
+import com.ocdsoft.bacta.swg.cu.object.tangible.TangibleObject;
+import com.ocdsoft.bacta.swg.cu.object.tangible.creature.CreatureObject;
 import com.ocdsoft.bacta.swg.data.ObjectTemplateService;
 import com.ocdsoft.bacta.swg.data.SetupSharedFile;
 import com.ocdsoft.bacta.swg.shared.iff.chunk.ChunkBuffer;

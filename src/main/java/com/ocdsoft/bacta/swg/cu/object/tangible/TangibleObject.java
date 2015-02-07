@@ -1,6 +1,6 @@
-package com.ocdsoft.bacta.swg.cu.object.game.tangible;
+package com.ocdsoft.bacta.swg.cu.object.tangible;
 
-import com.ocdsoft.bacta.swg.cu.object.game.SceneObject;
+import com.ocdsoft.bacta.swg.cu.object.SceneObject;
 
 public class TangibleObject extends SceneObject { //implements SteerSubject<Vec3> {
     public static final class Conditions {

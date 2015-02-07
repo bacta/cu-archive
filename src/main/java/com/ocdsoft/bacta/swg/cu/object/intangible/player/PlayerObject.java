@@ -1,6 +1,6 @@
-package com.ocdsoft.bacta.swg.cu.object.game.intangible.player;
+package com.ocdsoft.bacta.swg.cu.object.intangible.player;
 
-import com.ocdsoft.bacta.swg.cu.object.game.intangible.IntangibleObject;
+import com.ocdsoft.bacta.swg.cu.object.intangible.IntangibleObject;
 
 
 public final class PlayerObject extends IntangibleObject {
