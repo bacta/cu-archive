@@ -13,8 +13,8 @@ import com.ocdsoft.bacta.swg.cu.message.game.client.SelectCharacter;
 import com.ocdsoft.bacta.swg.cu.message.game.server.CmdStartScene;
 import com.ocdsoft.bacta.swg.cu.message.game.server.ParametersMessage;
 import com.ocdsoft.bacta.swg.cu.message.game.server.UnkByteFlag;
-import com.ocdsoft.bacta.swg.cu.object.game.SceneObject;
-import com.ocdsoft.bacta.swg.cu.object.game.tangible.creature.CreatureObject;
+import com.ocdsoft.bacta.swg.cu.object.SceneObject;
+import com.ocdsoft.bacta.swg.cu.object.tangible.creature.CreatureObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

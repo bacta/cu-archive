@@ -6,7 +6,7 @@ import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.service.object.ObjectService;
 import com.ocdsoft.bacta.soe.service.ContainerService;
 import com.ocdsoft.bacta.swg.cu.message.game.server.UpdateContainmentMessage;
-import com.ocdsoft.bacta.swg.cu.object.game.SceneObject;
+import com.ocdsoft.bacta.swg.cu.object.SceneObject;
 import com.ocdsoft.bacta.swg.shared.container.Container;
 import com.ocdsoft.bacta.swg.shared.container.ContainerErrorCode;
 import com.ocdsoft.bacta.swg.shared.container.SlottedContainer;

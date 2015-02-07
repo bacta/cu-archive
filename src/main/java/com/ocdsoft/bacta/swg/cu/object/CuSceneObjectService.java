@@ -7,7 +7,6 @@ import com.ocdsoft.bacta.engine.data.GameDatabaseConnector;
 import com.ocdsoft.bacta.engine.service.object.ObjectService;
 import com.ocdsoft.bacta.engine.service.objectfactory.NetworkObjectFactory;
 import com.ocdsoft.bacta.soe.service.ContainerService;
-import com.ocdsoft.bacta.swg.cu.object.game.SceneObject;
 import com.ocdsoft.bacta.swg.data.ObjectTemplateService;
 import com.ocdsoft.bacta.swg.shared.object.template.ObjectTemplate;
 import gnu.trove.map.TLongObjectMap;

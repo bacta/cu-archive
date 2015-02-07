@@ -1,6 +1,6 @@
-package com.ocdsoft.bacta.swg.cu.object.game.intangible;
+package com.ocdsoft.bacta.swg.cu.object.intangible;
 
-import com.ocdsoft.bacta.swg.cu.object.game.SceneObject;
+import com.ocdsoft.bacta.swg.cu.object.SceneObject;
 
 public abstract class IntangibleObject extends SceneObject {
     @Override

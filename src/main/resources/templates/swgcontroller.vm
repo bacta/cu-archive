@@ -4,16 +4,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ocdsoft.bacta.soe.ServerType;
-import com.ocdsoft.bacta.soe.SwgController;
-import com.ocdsoft.bacta.soe.SwgMessageController;
+import com.ocdsoft.bacta.soe.GameNetworkMessageHandled;
+import com.ocdsoft.bacta.soe.GameNetworkMessageController;
 import com.ocdsoft.bacta.soe.annotation.RolesAllowed;
 import com.ocdsoft.bacta.soe.connection.ConnectionRole;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import ${messageClasspath}.${messageName};
 
-@SwgController($messageNameClass)
+@GameNetworkMessageHandled($messageNameClass)
 @RolesAllowed({ConnectionRole.AUTHENTICATED})
-public class $className implements SwgMessageController<$messageName> {
+public class $className implements GameNetworkMessageController<$messageName> {
 
     private static final Logger logger = LoggerFactory.getLogger(${className}.class.getSimpleName());
 

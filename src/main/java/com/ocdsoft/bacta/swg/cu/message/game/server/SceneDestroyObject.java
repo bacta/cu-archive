@@ -3,7 +3,7 @@ package com.ocdsoft.bacta.swg.cu.message.game.server;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 import com.ocdsoft.bacta.soe.util.SOECRC32;
-import com.ocdsoft.bacta.swg.cu.object.game.SceneObject;
+import com.ocdsoft.bacta.swg.cu.object.SceneObject;
 
 import java.nio.ByteBuffer;
 
