@@ -19,6 +19,7 @@ import com.ocdsoft.bacta.engine.service.object.ObjectService;
 import com.ocdsoft.bacta.engine.service.objectfactory.NetworkObjectFactory;
 import com.ocdsoft.bacta.engine.service.objectfactory.impl.GuiceNetworkObjectFactory;
 import com.ocdsoft.bacta.soe.ServerState;
+import com.ocdsoft.bacta.soe.chat.ChatServerAgentService;
 import com.ocdsoft.bacta.soe.connection.ConnectionServerAgent;
 import com.ocdsoft.bacta.soe.data.couchbase.CouchbaseAccountService;
 import com.ocdsoft.bacta.soe.data.couchbase.CouchbaseConnectionDatabaseConnector;
