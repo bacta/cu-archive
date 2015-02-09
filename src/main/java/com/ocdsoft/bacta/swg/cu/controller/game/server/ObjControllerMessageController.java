@@ -23,16 +23,14 @@ import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import lombok.Getter;
 import org.apache.velocity.app.VelocityEngine;
+import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.nio.ByteBuffer;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
+import java.util.Iterator;
+import java.util.Set;
 
 @GameNetworkMessageHandled(ObjControllerMessage.class)
 @RolesAllowed({ConnectionRole.AUTHENTICATED})
@@ -95,27 +93,18 @@ public class ObjControllerMessageController implements GameNetworkMessageControl
 
     private void loadControllers() {
 
-        File file = new File("../conf/ObjectControllers.lst");
-        if(!file.exists()) {
-            file = new File(getClass().getResource("/ObjectControllers.lst").getFile());
-        }
+        String projectClassPath = System.getProperty("base.classpath");
+        Reflections reflections = new Reflections(projectClassPath + ".controller.game.object");
 
-        List<String> classNameList;
-        try {
-            classNameList = Files.readAllLines(Paths.get(file.toURI()));
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
+        Set<Class<? extends ObjController>> subTypes = reflections.getSubTypesOf(ObjController.class);
 
-        for(String className : classNameList) {
+        Iterator<Class<? extends ObjController>> iter = subTypes.iterator();
 
-            if(className.isEmpty()) {
-                continue;
-            }
+        while (iter.hasNext()) {
+
 
             try {
-                Class<? extends ObjController> controllerClass = (Class<? extends ObjController>) Class.forName(className);
+                Class<? extends ObjController> controllerClass = iter.next();
 
                 ObjControllerHandled controllerAnnotation = controllerClass.getAnnotation(ObjControllerHandled.class);
 
@@ -133,7 +122,10 @@ public class ObjControllerMessageController implements GameNetworkMessageControl
                 if (!controllers.containsKey(objControllerId.value())) {
 					logger.debug("Adding object controller: " + ObjectControllerNames.get(objControllerId.value()));
                     controllers.put(objControllerId.value(), controllerData);
+                } else {
+                    logger.warn("Controller already exists for '0x{}' Attempted to load {}", Integer.toHexString(objControllerId.value()), controller.getClass().getName());
                 }
+                
             } catch (Exception e) {
                 logger.error("Unable to add controller", e);
             }

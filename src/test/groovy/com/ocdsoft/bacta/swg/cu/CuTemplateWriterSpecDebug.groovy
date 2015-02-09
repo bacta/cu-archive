@@ -17,7 +17,7 @@ class CuTemplateWriterSpecDebug extends Specification {
         File file = new File(baseFilePath);
         String tempDir = file.getParentFile().getParent();
 
-        System.setProperty("template.classpath", CuServer.class.getPackage().getName());
+        System.setProperty("base.classpath", CuServer.class.getPackage().getName());
         System.setProperty("template.filepath", tempDir);
     }
 

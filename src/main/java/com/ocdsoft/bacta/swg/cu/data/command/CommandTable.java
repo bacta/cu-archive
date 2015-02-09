@@ -39,16 +39,16 @@ public class CommandTable implements SharedFileLoader {
     }
 
     private void load() {
-        logger.trace("Loading commands.");
-
-        loadTables("datatables/command/command_tables_shared.iff", commandTable);
-        logger.debug(String.format("Loaded %d commands.", commandTable.size()));
-
-        loadTables("datatables/command/command_tables_shared_ground.iff", groundCommandTable);
-        logger.debug(String.format("Loaded %d ground commands.", groundCommandTable.size()));
-
-        loadTables("datatables/command/command_tables_shared_space.iff", spaceCommandTable);
-        logger.debug(String.format("Loaded %d space commands.", spaceCommandTable.size()));
+//        logger.trace("Loading commands.");
+//
+//        loadTables("datatables/command/command_tables_shared.iff", commandTable);
+//        logger.debug(String.format("Loaded %d commands.", commandTable.size()));
+//
+//        loadTables("datatables/command/command_tables_shared_ground.iff", groundCommandTable);
+//        logger.debug(String.format("Loaded %d ground commands.", groundCommandTable.size()));
+//
+//        loadTables("datatables/command/command_tables_shared_space.iff", spaceCommandTable);
+//        logger.debug(String.format("Loaded %d space commands.", spaceCommandTable.size()));
     }
 
     /**

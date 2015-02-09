@@ -26,7 +26,7 @@ public final class CuServer {
         String baseFilePath = CuServer.class.getProtectionDomain().getCodeSource().getLocation().getFile();
         File file = new File(baseFilePath);
 
-        System.setProperty("template.classpath", CuServer.class.getPackage().getName());
+        System.setProperty("base.classpath", CuServer.class.getPackage().getName());
         System.setProperty("template.filepath", file.getParentFile().getParent());
 
         if (runChat) {
