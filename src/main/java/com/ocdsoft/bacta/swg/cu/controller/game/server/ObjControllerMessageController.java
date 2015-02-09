@@ -2,6 +2,7 @@ package com.ocdsoft.bacta.swg.cu.controller.game.server;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.service.object.ObjectService;
 import com.ocdsoft.bacta.soe.GameNetworkMessageController;
 import com.ocdsoft.bacta.soe.GameNetworkMessageHandled;
@@ -29,6 +30,7 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Constructor;
 import java.nio.ByteBuffer;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -49,12 +51,12 @@ public class ObjControllerMessageController implements GameNetworkMessageControl
     private final ObjMessageTemplateWriter objMessageTemplateWriter;
 
     @Inject
-    public ObjControllerMessageController(final Injector injector, final ObjectService<SceneObject> objectService) {
+    public ObjControllerMessageController(final Injector injector, final ObjectService<SceneObject> objectService, final BactaConfiguration configuration) {
         this.controllers = new TIntObjectHashMap<>();
         this.objectService = objectService;
         this.injector = injector;
         objMessageTemplateWriter = new ObjMessageTemplateWriter(ServerType.GAME);
-        loadControllers();
+        loadControllers(configuration.getStringCollection("Bacta/GameServer", "swgObjControllerClasspath"));
     }
     
     @Override
@@ -91,44 +93,63 @@ public class ObjControllerMessageController implements GameNetworkMessageControl
         logger.error(SoeMessageUtil.bytesToHex(message));
     }
 
-    private void loadControllers() {
+    private void loadControllers(Collection<String> swgObjControllerClasspath) {
 
-        String projectClassPath = System.getProperty("base.classpath");
-        Reflections reflections = new Reflections(projectClassPath + ".controller.game.object");
-
-        Set<Class<? extends ObjController>> subTypes = reflections.getSubTypesOf(ObjController.class);
-
-        Iterator<Class<? extends ObjController>> iter = subTypes.iterator();
-
-        while (iter.hasNext()) {
-
+        for (String classPath : swgObjControllerClasspath) {
 
             try {
-                Class<? extends ObjController> controllerClass = iter.next();
 
-                ObjControllerHandled controllerAnnotation = controllerClass.getAnnotation(ObjControllerHandled.class);
+                Class<? extends ObjController> controllerClass = (Class<? extends ObjController>) Class.forName(classPath);
 
-                if (controllerAnnotation == null) {
-                    logger.info("Missing @ObjControllerHandled annotation, discarding: " + controllerClass.getName());
-                    continue;
-                }
+                logger.info("Loading ObjController '{}'", classPath);
 
-                Class<?> handledMessage = controllerAnnotation.value();
-                ObjControllerId objControllerId =  handledMessage.getAnnotation(ObjControllerId.class);
+                loadControllerClass(injector, controllerClass);
+                continue;
 
-                ObjController controller = injector.getInstance(controllerClass);
-                ControllerData controllerData = new ControllerData(controller, handledMessage.getConstructor(ByteBuffer.class));
-
-                if (!controllers.containsKey(objControllerId.value())) {
-					logger.debug("Adding object controller: " + ObjectControllerNames.get(objControllerId.value()));
-                    controllers.put(objControllerId.value(), controllerData);
-                } else {
-                    logger.warn("Controller already exists for '0x{}' Attempted to load {}", Integer.toHexString(objControllerId.value()), controller.getClass().getName());
-                }
-                
-            } catch (Exception e) {
-                logger.error("Unable to add controller", e);
+            } catch (ClassNotFoundException e) {
             }
+
+            logger.info("Loading ObjControllers from '{}'", classPath);
+
+            Reflections reflections = new Reflections(classPath);
+
+            Set<Class<? extends ObjController>> subTypes = reflections.getSubTypesOf(ObjController.class);
+
+            Iterator<Class<? extends ObjController>> iter = subTypes.iterator();
+
+            while (iter.hasNext()) {
+                Class<? extends ObjController> controllerClass = iter.next();
+                loadControllerClass(injector, controllerClass);
+            }
+        }
+    }
+
+
+    private void loadControllerClass ( final Injector injector, Class<?extends ObjController > controllerClass){
+        try {
+
+            ObjControllerHandled controllerAnnotation = controllerClass.getAnnotation(ObjControllerHandled.class);
+
+            if (controllerAnnotation == null) {
+                logger.info("Missing @ObjControllerHandled annotation, discarding: " + controllerClass.getName());
+                return;
+            }
+
+            Class<?> handledMessage = controllerAnnotation.value();
+            ObjControllerId objControllerId = handledMessage.getAnnotation(ObjControllerId.class);
+
+            ObjController controller = injector.getInstance(controllerClass);
+            ControllerData controllerData = new ControllerData(controller, handledMessage.getConstructor(ByteBuffer.class));
+
+            if (!controllers.containsKey(objControllerId.value())) {
+                logger.debug("Adding object controller: " + ObjectControllerNames.get(objControllerId.value()));
+                controllers.put(objControllerId.value(), controllerData);
+            } else {
+                logger.warn("Controller already exists for '0x{}' Attempted to load {}", Integer.toHexString(objControllerId.value()), controller.getClass().getName());
+            }
+
+        } catch (Exception e) {
+            logger.error("Unable to add controller", e);
         }
     }
 
