@@ -14,7 +14,7 @@ public class CommandData {
     @Getter private final String failScriptHook;
     @Getter private final String cppHook;
     @Getter private final String cppFailHook;
-    @Getter private final int defaultTime;
+    @Getter private final float defaultTime;
     @Getter private final String characterAbility;
     
     public CommandData(DataTableRow row) {
@@ -24,7 +24,7 @@ public class CommandData {
         this.failScriptHook = row.get(3).getString();
         this.cppHook = row.get(4).getString();
         this.cppFailHook = row.get(5).getString();
-        this.defaultTime = row.get(6).getInt();
+        this.defaultTime = row.get(6).getFloat();
         this.characterAbility = row.get(7).getString();
         
         // TODO: Finish parsing

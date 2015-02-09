@@ -1,13 +1,13 @@
 package com.ocdsoft.bacta.swg.cu.controller.game.server;
 
 import com.google.inject.Inject;
-import com.ocdsoft.bacta.engine.network.client.ConnectionState;
 import com.ocdsoft.bacta.soe.GameNetworkMessageController;
 import com.ocdsoft.bacta.soe.GameNetworkMessageHandled;
 import com.ocdsoft.bacta.soe.RolesAllowed;
 import com.ocdsoft.bacta.soe.connection.ConnectionRole;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.io.udp.game.GameServerState;
+import com.ocdsoft.bacta.soe.message.TerminateReason;
 import com.ocdsoft.bacta.swg.cu.message.login.server.GameServerStatusResponse;
 import com.ocdsoft.bacta.swg.cu.object.login.ClusterEntry;
 
@@ -33,6 +33,6 @@ public class GameServerStatusResponseController implements GameNetworkMessageCon
             serverState.setId(message.getClusterId());
         }
         
-        loginConnection.setState(ConnectionState.DISCONNECTED);
+        loginConnection.terminate(TerminateReason.NONE);
     }
 }

@@ -1,7 +1,10 @@
 package com.ocdsoft.bacta.swg.cu;
 
+import com.codahale.metrics.MetricRegistry;
+import com.codahale.metrics.health.HealthCheckRegistry;
 import com.google.inject.AbstractModule;
 import com.google.inject.Module;
+import com.google.inject.Singleton;
 import com.google.inject.TypeLiteral;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.conf.ini.IniBactaConfiguration;
@@ -56,6 +59,8 @@ public class CuGameModule extends AbstractModule implements Module {
         bind(new TypeLiteral<ContainerService<SceneObject>>() {}).to(CuContainerService.class);
         bind(new TypeLiteral<ObjectService<SceneObject>>() {
         }).to(CuSceneObjectService.class);
+        bind(MetricRegistry.class).in(Singleton.class);
+        bind(HealthCheckRegistry.class).in(Singleton.class);
         bind(ObjectService.class).to(CuSceneObjectService.class);
         bind(BactaConfiguration.class).to(IniBactaConfiguration.class);
         bind(SharedFileService.class).asEagerSingleton();
@@ -72,5 +77,6 @@ public class CuGameModule extends AbstractModule implements Module {
         bind(GameServerState.class).to(CuGameServerState.class);
         bind(new TypeLiteral<GameServerState<ClusterEntry>>(){}).to(CuGameServerState.class);
         bind(ConnectionServerAgent.class).to(CuConnectionServerAgent.class);
+
     }
 }

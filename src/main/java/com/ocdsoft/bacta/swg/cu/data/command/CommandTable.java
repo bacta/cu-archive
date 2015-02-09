@@ -68,7 +68,7 @@ public class CommandTable implements SharedFileLoader {
                 loadTable(tableName, table);
             }
         } catch(Exception e) {
-            logger.error("Unable to load commands file list from {}", tableFile);
+            logger.error("Unable to load commands file list from {}", tableFile, e);
         }
     }
 
@@ -89,7 +89,7 @@ public class CommandTable implements SharedFileLoader {
                 table.put(newData.getCommandName(), newData);
             }
         } catch(Exception e) {
-            logger.error("Unable to load commands table from {}", commandTable);
+            logger.error("Unable to load commands table from {}", commandTable, e);
         }
     }
     

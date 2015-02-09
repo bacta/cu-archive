@@ -1,7 +1,10 @@
 package com.ocdsoft.bacta.swg.cu;
 
+import com.codahale.metrics.MetricRegistry;
+import com.codahale.metrics.health.HealthCheckRegistry;
 import com.google.inject.AbstractModule;
 import com.google.inject.Module;
+import com.google.inject.Singleton;
 import com.google.inject.TypeLiteral;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.conf.ini.IniBactaConfiguration;
@@ -29,12 +32,13 @@ public class CuLoginModule extends AbstractModule implements Module {
 
         bind(BactaConfiguration.class).to(IniBactaConfiguration.class);
         bind(SessionKeyService.class).to(SWGSessionKeyService.class);
+        bind(MetricRegistry.class).in(Singleton.class);
+        bind(HealthCheckRegistry.class).in(Singleton.class);
         bind(OutgoingConnectionService.class).to(LoginServer.LoginOutgoingConnectionService.class);
         bind(ConnectionDatabaseConnector.class).to(CouchbaseConnectionDatabaseConnector.class);
         bind(NetworkSerializer.class).to(LoginObjectSerializer.class);
         bind(new TypeLiteral<AccountService<SoeAccount>>(){}).to(new TypeLiteral<CouchbaseAccountService<SoeAccount>>(){});
         bind(PasswordHash.class).to(Pbkdf2SaltedPasswordHash.class);
-
         bind(ServerState.class).to(LoginServerState.class);
     }
 
