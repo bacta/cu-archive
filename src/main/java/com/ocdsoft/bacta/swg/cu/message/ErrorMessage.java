@@ -6,6 +6,14 @@ import com.ocdsoft.bacta.soe.util.SOECRC32;
 
 import java.nio.ByteBuffer;
 
+/**
+struct __cppobj ErrorMessage : GameNetworkMessage
+{
+    Archive::AutoVariable<std::string > errorName;
+    Archive::AutoVariable<std::string > description;
+    Archive::AutoVariable<bool> fatal;
+};
+ */
 public final class ErrorMessage extends GameNetworkMessage {
 
     private static final short priority = 0x2;
